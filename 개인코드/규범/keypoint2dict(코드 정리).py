@@ -1,12 +1,3 @@
-'''
-keypoint 추출을 위한 함수
-
-해당 함수의 입력은 cv2의 capture
-출력은 오른손 왼손 몸의 nparray
-
-오른손, 왼손 각각 20point
-
-'''
 import mediapipe as mp
 import cv2
 import numpy as np
