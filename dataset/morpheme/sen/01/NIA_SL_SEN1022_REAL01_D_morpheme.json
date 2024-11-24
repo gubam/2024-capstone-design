@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0228/NIA_SL_SEN1022_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1022_REAL01_D.mp4",
+        "duration": 5.384,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 0.887,
+            "end": 1.884,
+            "attributes": [
+                {
+                    "name": "편의점"
+                }
+            ]
+        },
+        {
+            "start": 1.934,
+            "end": 2.41,
+            "attributes": [
+                {
+                    "name": "무엇"
+                }
+            ]
+        },
+        {
+            "start": 2.469,
+            "end": 3.592,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        }
+    ]
+}

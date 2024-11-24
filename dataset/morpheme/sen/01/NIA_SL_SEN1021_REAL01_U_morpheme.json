@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0228/NIA_SL_SEN1021_REAL01_U.mp4",
+        "name": "NIA_SL_SEN1021_REAL01_U.mp4",
+        "duration": 5.284,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 0.952,
+            "end": 1.996,
+            "attributes": [
+                {
+                    "name": "편의점"
+                }
+            ]
+        },
+        {
+            "start": 2.07,
+            "end": 3.713,
+            "attributes": [
+                {
+                    "name": "곳곳"
+                }
+            ]
+        }
+    ]
+}

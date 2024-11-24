@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_swlee0243/NIA_SL_SEN1777_REAL01_F.mp4",
+        "name": "NIA_SL_SEN1777_REAL01_F.mp4",
+        "duration": 5.484,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.059,
+            "end": 2.832,
+            "attributes": [
+                {
+                    "name": "가방"
+                }
+            ]
+        },
+        {
+            "start": 2.968,
+            "end": 4.346,
+            "attributes": [
+                {
+                    "name": "잃어버리다"
+                }
+            ]
+        }
+    ]
+}

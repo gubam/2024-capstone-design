@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0226/NIA_SL_SEN0407_REAL01_F.mp4",
+        "name": "NIA_SL_SEN0407_REAL01_F.mp4",
+        "duration": 6.384,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.614,
+            "end": 2.383,
+            "attributes": [
+                {
+                    "name": "택시"
+                }
+            ]
+        },
+        {
+            "start": 2.505,
+            "end": 3.177,
+            "attributes": [
+                {
+                    "name": "문자받다"
+                }
+            ]
+        },
+        {
+            "start": 3.304,
+            "end": 4.514,
+            "attributes": [
+                {
+                    "name": "맞다"
+                }
+            ]
+        }
+    ]
+}

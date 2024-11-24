@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0232/NIA_SL_SEN0467_REAL01_F.mp4",
+        "name": "NIA_SL_SEN0467_REAL01_F.mp4",
+        "duration": 5.984,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.317,
+            "end": 2.499,
+            "attributes": [
+                {
+                    "name": "물품보관"
+                }
+            ]
+        },
+        {
+            "start": 2.586,
+            "end": 3.315,
+            "attributes": [
+                {
+                    "name": "문안열리다"
+                }
+            ]
+        },
+        {
+            "start": 3.408,
+            "end": 4.51,
+            "attributes": [
+                {
+                    "name": "안되다"
+                }
+            ]
+        }
+    ]
+}

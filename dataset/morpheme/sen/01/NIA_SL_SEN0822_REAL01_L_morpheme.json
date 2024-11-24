@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_jhhan0228/NIA_SL_SEN0822_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0822_REAL01_L.mp4",
+        "duration": 6.817,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.646,
+            "end": 3.364,
+            "attributes": [
+                {
+                    "name": "건너다"
+                }
+            ]
+        },
+        {
+            "start": 3.525,
+            "end": 4.861,
+            "attributes": [
+                {
+                    "name": "내리다"
+                }
+            ]
+        }
+    ]
+}

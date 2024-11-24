@@ -1,0 +1,55 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0237/NIA_SL_SEN1516_REAL01_U.mp4",
+        "name": "NIA_SL_SEN1516_REAL01_U.mp4",
+        "duration": 6.984,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.223,
+            "end": 2.477,
+            "attributes": [
+                {
+                    "name": "버스"
+                }
+            ]
+        },
+        {
+            "start": 2.74,
+            "end": 2.982,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        },
+        {
+            "start": 3.206,
+            "end": 3.546,
+            "attributes": [
+                {
+                    "name": "저기"
+                }
+            ]
+        },
+        {
+            "start": 3.706,
+            "end": 4.283,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 4.707,
+            "end": 5.376,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        }
+    ]
+}

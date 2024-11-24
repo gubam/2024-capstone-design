@@ -1,0 +1,46 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_jhhan0226/NIA_SL_SEN0803_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0803_REAL01_L.mp4",
+        "duration": 7.217,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.065,
+            "end": 3.023,
+            "attributes": [
+                {
+                    "name": "기차"
+                }
+            ]
+        },
+        {
+            "start": 3.157,
+            "end": 3.583,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        },
+        {
+            "start": 3.664,
+            "end": 4.135,
+            "attributes": [
+                {
+                    "name": "내리다"
+                }
+            ]
+        },
+        {
+            "start": 4.24,
+            "end": 5.536,
+            "attributes": [
+                {
+                    "name": "맞다"
+                }
+            ]
+        }
+    ]
+}

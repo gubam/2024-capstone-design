@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0240/NIA_SL_SEN1142_REAL01_R.mp4",
+        "name": "NIA_SL_SEN1142_REAL01_R.mp4",
+        "duration": 7.45,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.532,
+            "end": 3.331,
+            "attributes": [
+                {
+                    "name": "단말기터치"
+                }
+            ]
+        },
+        {
+            "start": 3.423,
+            "end": 4.305,
+            "attributes": [
+                {
+                    "name": "사용"
+                }
+            ]
+        },
+        {
+            "start": 4.387,
+            "end": 5.795,
+            "attributes": [
+                {
+                    "name": "불가능"
+                }
+            ]
+        }
+    ]
+}

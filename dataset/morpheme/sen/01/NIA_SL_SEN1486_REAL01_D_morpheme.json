@@ -1,0 +1,55 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0234/NIA_SL_SEN1486_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1486_REAL01_D.mp4",
+        "duration": 7.317,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.225,
+            "end": 2.602,
+            "attributes": [
+                {
+                    "name": "군청"
+                }
+            ]
+        },
+        {
+            "start": 2.932,
+            "end": 3.101,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        },
+        {
+            "start": 3.286,
+            "end": 3.932,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 4.355,
+            "end": 4.632,
+            "attributes": [
+                {
+                    "name": "도착"
+                }
+            ]
+        },
+        {
+            "start": 5.001,
+            "end": 5.769,
+            "attributes": [
+                {
+                    "name": "내리다"
+                }
+            ]
+        }
+    ]
+}

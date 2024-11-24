@@ -1,0 +1,55 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0231/NIA_SL_SEN1458_REAL01_U.mp4",
+        "name": "NIA_SL_SEN1458_REAL01_U.mp4",
+        "duration": 7.35,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.427,
+            "end": 2.835,
+            "attributes": [
+                {
+                    "name": "종로"
+                }
+            ]
+        },
+        {
+            "start": 3.158,
+            "end": 3.358,
+            "attributes": [
+                {
+                    "name": "목적"
+                }
+            ]
+        },
+        {
+            "start": 3.534,
+            "end": 4.034,
+            "attributes": [
+                {
+                    "name": "가다"
+                }
+            ]
+        },
+        {
+            "start": 4.188,
+            "end": 4.688,
+            "attributes": [
+                {
+                    "name": "길"
+                }
+            ]
+        },
+        {
+            "start": 4.995,
+            "end": 5.78,
+            "attributes": [
+                {
+                    "name": "방법"
+                }
+            ]
+        }
+    ]
+}

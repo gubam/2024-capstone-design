@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_jhhan0242/NIA_SL_SEN0967_REAL01_R.mp4",
+        "name": "NIA_SL_SEN0967_REAL01_R.mp4",
+        "duration": 6.717,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.532,
+            "end": 3.642,
+            "attributes": [
+                {
+                    "name": "천안아산역"
+                }
+            ]
+        },
+        {
+            "start": 3.849,
+            "end": 5.535,
+            "attributes": [
+                {
+                    "name": "차내리다"
+                }
+            ]
+        }
+    ]
+}

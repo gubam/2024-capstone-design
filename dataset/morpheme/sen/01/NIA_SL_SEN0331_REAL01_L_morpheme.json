@@ -1,0 +1,46 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_emyou0239/NIA_SL_SEN0331_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0331_REAL01_L.mp4",
+        "duration": 7.15,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.617,
+            "end": 3.027,
+            "attributes": [
+                {
+                    "name": "교통카드"
+                }
+            ]
+        },
+        {
+            "start": 3.377,
+            "end": 3.662,
+            "attributes": [
+                {
+                    "name": "남다"
+                }
+            ]
+        },
+        {
+            "start": 3.99,
+            "end": 4.118,
+            "attributes": [
+                {
+                    "name": "돈"
+                }
+            ]
+        },
+        {
+            "start": 4.31,
+            "end": 5.483,
+            "attributes": [
+                {
+                    "name": "얼마"
+                }
+            ]
+        }
+    ]
+}

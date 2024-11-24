@@ -1,0 +1,19 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0233/NIA_SL_SEN0474_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0474_REAL01_L.mp4",
+        "duration": 3.817,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.402,
+            "end": 2.504,
+            "attributes": [
+                {
+                    "name": "안전벨트"
+                }
+            ]
+        }
+    ]
+}

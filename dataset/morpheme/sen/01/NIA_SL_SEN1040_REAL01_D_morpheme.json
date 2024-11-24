@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0229/NIA_SL_SEN1040_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1040_REAL01_D.mp4",
+        "duration": 6.184,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.623,
+            "end": 3.179,
+            "attributes": [
+                {
+                    "name": "안내소"
+                }
+            ]
+        },
+        {
+            "start": 3.308,
+            "end": 4.454,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        }
+    ]
+}

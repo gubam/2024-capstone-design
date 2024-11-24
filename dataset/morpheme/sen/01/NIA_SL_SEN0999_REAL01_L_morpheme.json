@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_jhhan0245/NIA_SL_SEN0999_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0999_REAL01_L.mp4",
+        "duration": 4.917,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.433,
+            "end": 2.036,
+            "attributes": [
+                {
+                    "name": "엘리베이터"
+                }
+            ]
+        },
+        {
+            "start": 2.112,
+            "end": 3.351,
+            "attributes": [
+                {
+                    "name": "뼈곳"
+                }
+            ]
+        }
+    ]
+}

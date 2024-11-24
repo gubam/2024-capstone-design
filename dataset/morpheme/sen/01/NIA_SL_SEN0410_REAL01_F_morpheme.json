@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0226/NIA_SL_SEN0410_REAL01_F.mp4",
+        "name": "NIA_SL_SEN0410_REAL01_F.mp4",
+        "duration": 4.75,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.323,
+            "end": 2.052,
+            "attributes": [
+                {
+                    "name": "경찰"
+                }
+            ]
+        },
+        {
+            "start": 2.169,
+            "end": 3.133,
+            "attributes": [
+                {
+                    "name": "전화걸다"
+                }
+            ]
+        }
+    ]
+}

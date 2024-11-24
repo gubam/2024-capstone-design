@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_bkyu0241/NIA_SL_SEN0156_REAL01_R.mp4",
+        "name": "NIA_SL_SEN0156_REAL01_R.mp4",
+        "duration": 5.084,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.543,
+            "end": 2.248,
+            "attributes": [
+                {
+                    "name": "설명"
+                }
+            ]
+        },
+        {
+            "start": 2.406,
+            "end": 3.394,
+            "attributes": [
+                {
+                    "name": "다시"
+                }
+            ]
+        }
+    ]
+}

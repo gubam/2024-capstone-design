@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0228/NIA_SL_SEN1025_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1025_REAL01_D.mp4",
+        "duration": 4.984,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.676,
+            "end": 2.191,
+            "attributes": [
+                {
+                    "name": "의자"
+                }
+            ]
+        },
+        {
+            "start": 2.267,
+            "end": 3.547,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        }
+    ]
+}

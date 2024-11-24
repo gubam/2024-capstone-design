@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0240/NIA_SL_SEN1543_REAL01_L.mp4",
+        "name": "NIA_SL_SEN1543_REAL01_L.mp4",
+        "duration": 7.084,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.383,
+            "end": 3.229,
+            "attributes": [
+                {
+                    "name": "대로"
+                }
+            ]
+        },
+        {
+            "start": 3.583,
+            "end": 4.222,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 4.591,
+            "end": 5.345,
+            "attributes": [
+                {
+                    "name": "차내리다"
+                }
+            ]
+        }
+    ]
+}

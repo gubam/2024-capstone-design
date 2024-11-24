@@ -1,0 +1,55 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0245/NIA_SL_SEN1592_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1592_REAL01_D.mp4",
+        "duration": 8.384,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.653,
+            "end": 3.153,
+            "attributes": [
+                {
+                    "name": "경찰"
+                }
+            ]
+        },
+        {
+            "start": 3.399,
+            "end": 3.899,
+            "attributes": [
+                {
+                    "name": "저기"
+                }
+            ]
+        },
+        {
+            "start": 4.106,
+            "end": 4.444,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        },
+        {
+            "start": 4.652,
+            "end": 5.368,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 5.737,
+            "end": 6.429,
+            "attributes": [
+                {
+                    "name": "내리다"
+                }
+            ]
+        }
+    ]
+}

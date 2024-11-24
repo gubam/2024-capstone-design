@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_emyou0232/NIA_SL_SEN0270_REAL01_R.mp4",
+        "name": "NIA_SL_SEN0270_REAL01_R.mp4",
+        "duration": 6.15,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.66,
+            "end": 2.91,
+            "attributes": [
+                {
+                    "name": "학교"
+                }
+            ]
+        },
+        {
+            "start": 3.087,
+            "end": 4.597,
+            "attributes": [
+                {
+                    "name": "주차"
+                }
+            ]
+        }
+    ]
+}

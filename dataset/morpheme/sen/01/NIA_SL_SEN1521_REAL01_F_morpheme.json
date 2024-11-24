@@ -1,0 +1,46 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0238/NIA_SL_SEN1521_REAL01_F.mp4",
+        "name": "NIA_SL_SEN1521_REAL01_F.mp4",
+        "duration": 6.717,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.178,
+            "end": 2.84,
+            "attributes": [
+                {
+                    "name": "119"
+                }
+            ]
+        },
+        {
+            "start": 3.17,
+            "end": 3.539,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        },
+        {
+            "start": 3.693,
+            "end": 4.262,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 4.693,
+            "end": 5.193,
+            "attributes": [
+                {
+                    "name": "여기"
+                }
+            ]
+        }
+    ]
+}

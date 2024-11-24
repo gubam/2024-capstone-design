@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_yhjeon0242/NIA_SL_SEN1962_REAL01_F.mp4",
+        "name": "NIA_SL_SEN1962_REAL01_F.mp4",
+        "duration": 4.35,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.272,
+            "end": 1.779,
+            "attributes": [
+                {
+                    "name": "반지"
+                }
+            ]
+        },
+        {
+            "start": 1.925,
+            "end": 2.805,
+            "attributes": [
+                {
+                    "name": "잃어버리다"
+                }
+            ]
+        }
+    ]
+}

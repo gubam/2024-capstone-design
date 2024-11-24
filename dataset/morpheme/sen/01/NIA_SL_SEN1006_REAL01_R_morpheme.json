@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0226/NIA_SL_SEN1006_REAL01_R.mp4",
+        "name": "NIA_SL_SEN1006_REAL01_R.mp4",
+        "duration": 6.517,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.476,
+            "end": 2.204,
+            "attributes": [
+                {
+                    "name": "은행"
+                }
+            ]
+        },
+        {
+            "start": 2.303,
+            "end": 2.866,
+            "attributes": [
+                {
+                    "name": "무엇"
+                }
+            ]
+        },
+        {
+            "start": 2.964,
+            "end": 4.599,
+            "attributes": [
+                {
+                    "name": "길"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_rhkim0230/NIA_SL_SEN1250_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1250_REAL01_D.mp4",
+        "duration": 7.617,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.073,
+            "end": 2.623,
+            "attributes": [
+                {
+                    "name": "맥도날드"
+                }
+            ]
+        },
+        {
+            "start": 2.887,
+            "end": 3.33,
+            "attributes": [
+                {
+                    "name": "보다"
+                }
+            ]
+        },
+        {
+            "start": 3.693,
+            "end": 3.928,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        },
+        {
+            "start": 4.285,
+            "end": 4.821,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 5.271,
+            "end": 6.315,
+            "attributes": [
+                {
+                    "name": "차내리다"
+                }
+            ]
+        }
+    ]
+}

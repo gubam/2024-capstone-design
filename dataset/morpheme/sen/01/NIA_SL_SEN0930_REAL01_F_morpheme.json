@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_jhhan0238/NIA_SL_SEN0930_REAL01_F.mp4",
+        "name": "NIA_SL_SEN0930_REAL01_F.mp4",
+        "duration": 6.15,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.532,
+            "end": 3.206,
+            "attributes": [
+                {
+                    "name": "한국농아인협회"
+                }
+            ]
+        },
+        {
+            "start": 3.403,
+            "end": 4.642,
+            "attributes": [
+                {
+                    "name": "목적"
+                }
+            ]
+        }
+    ]
+}

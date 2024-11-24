@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_yhjeon0244/NIA_SL_SEN1989_REAL01_R.mp4",
+        "name": "NIA_SL_SEN1989_REAL01_R.mp4",
+        "duration": 4.484,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.415,
+            "end": 1.915,
+            "attributes": [
+                {
+                    "name": "접근"
+                }
+            ]
+        },
+        {
+            "start": 2.03,
+            "end": 3.024,
+            "attributes": [
+                {
+                    "name": "도착"
+                }
+            ]
+        }
+    ]
+}

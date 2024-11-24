@@ -1,0 +1,46 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0232/NIA_SL_SEN1468_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1468_REAL01_D.mp4",
+        "duration": 6.817,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.085,
+            "end": 2.708,
+            "attributes": [
+                {
+                    "name": "터널"
+                }
+            ]
+        },
+        {
+            "start": 2.97,
+            "end": 3.585,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 4.086,
+            "end": 4.586,
+            "attributes": [
+                {
+                    "name": "도착"
+                }
+            ]
+        },
+        {
+            "start": 4.955,
+            "end": 5.709,
+            "attributes": [
+                {
+                    "name": "차내리다"
+                }
+            ]
+        }
+    ]
+}

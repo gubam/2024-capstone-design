@@ -1,0 +1,64 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0244/NIA_SL_SEN1589_REAL01_U.mp4",
+        "name": "NIA_SL_SEN1589_REAL01_U.mp4",
+        "duration": 8.55,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.373,
+            "end": 3.065,
+            "attributes": [
+                {
+                    "name": "은행"
+                }
+            ]
+        },
+        {
+            "start": 3.288,
+            "end": 3.696,
+            "attributes": [
+                {
+                    "name": "저기"
+                }
+            ]
+        },
+        {
+            "start": 3.857,
+            "end": 4.326,
+            "attributes": [
+                {
+                    "name": "곳"
+                }
+            ]
+        },
+        {
+            "start": 4.503,
+            "end": 5.095,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 5.334,
+            "end": 5.888,
+            "attributes": [
+                {
+                    "name": "도착"
+                }
+            ]
+        },
+        {
+            "start": 6.211,
+            "end": 7.142,
+            "attributes": [
+                {
+                    "name": "차내리다"
+                }
+            ]
+        }
+    ]
+}

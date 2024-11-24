@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_hwlee0243/NIA_SL_SEN0776_REAL01_D.mp4",
+        "name": "NIA_SL_SEN0776_REAL01_D.mp4",
+        "duration": 5.784,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.723,
+            "end": 2.738,
+            "attributes": [
+                {
+                    "name": "시청"
+                }
+            ]
+        },
+        {
+            "start": 3.036,
+            "end": 4.035,
+            "attributes": [
+                {
+                    "name": "차두다"
+                }
+            ]
+        }
+    ]
+}

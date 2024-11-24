@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_emyou0236/NIA_SL_SEN0302_REAL01_F.mp4",
+        "name": "NIA_SL_SEN0302_REAL01_F.mp4",
+        "duration": 5.617,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.471,
+            "end": 1.742,
+            "attributes": [
+                {
+                    "name": "아이"
+                }
+            ]
+        },
+        {
+            "start": 2.034,
+            "end": 2.391,
+            "attributes": [
+                {
+                    "name": "혼자"
+                }
+            ]
+        },
+        {
+            "start": 2.669,
+            "end": 3.978,
+            "attributes": [
+                {
+                    "name": "방황"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/NIA_SL_SEN0218_REAL01_F/NIA_SL_SEN0218_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0218_REAL01_L.mp4",
+        "duration": 4.884,
+        "exportedOn": "2020/12/17"
+    },
+    "data": [
+        {
+            "start": 1.818,
+            "end": 2.885,
+            "attributes": [
+                {
+                    "name": "사거리"
+                }
+            ]
+        },
+        {
+            "start": 2.99,
+            "end": 4.367,
+            "attributes": [
+                {
+                    "name": "건너다"
+                }
+            ]
+        }
+    ]
+}

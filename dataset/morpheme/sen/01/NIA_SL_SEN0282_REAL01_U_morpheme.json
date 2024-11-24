@@ -1,0 +1,46 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_emyou0234/NIA_SL_SEN0282_REAL01_U.mp4",
+        "name": "NIA_SL_SEN0282_REAL01_U.mp4",
+        "duration": 6.517,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.536,
+            "end": 2.036,
+            "attributes": [
+                {
+                    "name": "지하철"
+                }
+            ]
+        },
+        {
+            "start": 2.199,
+            "end": 2.871,
+            "attributes": [
+                {
+                    "name": "가방"
+                }
+            ]
+        },
+        {
+            "start": 3.099,
+            "end": 3.513,
+            "attributes": [
+                {
+                    "name": "위로올리다"
+                }
+            ]
+        },
+        {
+            "start": 3.848,
+            "end": 4.885,
+            "attributes": [
+                {
+                    "name": "까먹다"
+                }
+            ]
+        }
+    ]
+}

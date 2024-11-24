@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0236/NIA_SL_SEN1501_REAL01_F.mp4",
+        "name": "NIA_SL_SEN1501_REAL01_F.mp4",
+        "duration": 7.05,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.31,
+            "end": 3.611,
+            "attributes": [
+                {
+                    "name": "샛길"
+                }
+            ]
+        },
+        {
+            "start": 4.003,
+            "end": 4.503,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 4.903,
+            "end": 5.403,
+            "attributes": [
+                {
+                    "name": "여기"
+                }
+            ]
+        }
+    ]
+}

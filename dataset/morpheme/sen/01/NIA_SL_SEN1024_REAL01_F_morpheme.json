@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0228/NIA_SL_SEN1024_REAL01_F.mp4",
+        "name": "NIA_SL_SEN1024_REAL01_F.mp4",
+        "duration": 4.817,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.479,
+            "end": 1.955,
+            "attributes": [
+                {
+                    "name": "의자"
+                }
+            ]
+        },
+        {
+            "start": 2.051,
+            "end": 3.545,
+            "attributes": [
+                {
+                    "name": "무엇"
+                }
+            ]
+        }
+    ]
+}

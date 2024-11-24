@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_jhhan0231/NIA_SL_SEN0856_REAL01_D.mp4",
+        "name": "NIA_SL_SEN0856_REAL01_D.mp4",
+        "duration": 5.284,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.556,
+            "end": 1.953,
+            "attributes": [
+                {
+                    "name": "차"
+                }
+            ]
+        },
+        {
+            "start": 2.046,
+            "end": 2.437,
+            "attributes": [
+                {
+                    "name": "뒤"
+                }
+            ]
+        },
+        {
+            "start": 2.537,
+            "end": 3.919,
+            "attributes": [
+                {
+                    "name": "들어올리다"
+                }
+            ]
+        }
+    ]
+}

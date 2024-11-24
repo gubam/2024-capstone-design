@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0236/NIA_SL_SEN0508_REAL01_F.mp4",
+        "name": "NIA_SL_SEN0508_REAL01_F.mp4",
+        "duration": 4.884,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 0.893,
+            "end": 1.594,
+            "attributes": [
+                {
+                    "name": "차"
+                }
+            ]
+        },
+        {
+            "start": 1.687,
+            "end": 2.239,
+            "attributes": [
+                {
+                    "name": "유리"
+                }
+            ]
+        },
+        {
+            "start": 2.343,
+            "end": 3.606,
+            "attributes": [
+                {
+                    "name": "올리다"
+                }
+            ]
+        }
+    ]
+}

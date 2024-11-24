@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_sjim0235/NIA_SL_SEN1493_REAL01_D.mp4",
+        "name": "NIA_SL_SEN1493_REAL01_D.mp4",
+        "duration": 5.95,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.219,
+            "end": 2.719,
+            "attributes": [
+                {
+                    "name": "병원"
+                }
+            ]
+        },
+        {
+            "start": 2.903,
+            "end": 3.549,
+            "attributes": [
+                {
+                    "name": "다음"
+                }
+            ]
+        },
+        {
+            "start": 3.849,
+            "end": 4.611,
+            "attributes": [
+                {
+                    "name": "내리다"
+                }
+            ]
+        }
+    ]
+}

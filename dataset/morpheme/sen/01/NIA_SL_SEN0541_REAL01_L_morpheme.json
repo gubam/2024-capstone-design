@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0240/NIA_SL_SEN0541_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0541_REAL01_L.mp4",
+        "duration": 5.15,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.391,
+            "end": 1.994,
+            "attributes": [
+                {
+                    "name": "유리"
+                }
+            ]
+        },
+        {
+            "start": 2.133,
+            "end": 3.521,
+            "attributes": [
+                {
+                    "name": "올리다"
+                }
+            ]
+        }
+    ]
+}

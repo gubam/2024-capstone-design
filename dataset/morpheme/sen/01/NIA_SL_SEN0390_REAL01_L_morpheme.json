@@ -1,0 +1,46 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_emyou0244/NIA_SL_SEN0390_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0390_REAL01_L.mp4",
+        "duration": 5.984,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.54,
+            "end": 1.925,
+            "attributes": [
+                {
+                    "name": "5호"
+                }
+            ]
+        },
+        {
+            "start": 2.046,
+            "end": 2.467,
+            "attributes": [
+                {
+                    "name": "갈아타다"
+                }
+            ]
+        },
+        {
+            "start": 2.789,
+            "end": 3.203,
+            "attributes": [
+                {
+                    "name": "안내하다"
+                }
+            ]
+        },
+        {
+            "start": 3.366,
+            "end": 4.468,
+            "attributes": [
+                {
+                    "name": "도움받다"
+                }
+            ]
+        }
+    ]
+}

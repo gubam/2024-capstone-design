@@ -1,0 +1,19 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0238/NIA_SL_SEN0527_REAL01_U.mp4",
+        "name": "NIA_SL_SEN0527_REAL01_U.mp4",
+        "duration": 4.084,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 0.804,
+            "end": 2.496,
+            "attributes": [
+                {
+                    "name": "영수증"
+                }
+            ]
+        }
+    ]
+}

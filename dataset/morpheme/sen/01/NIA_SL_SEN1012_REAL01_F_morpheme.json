@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_moyu0227/NIA_SL_SEN1012_REAL01_F.mp4",
+        "name": "NIA_SL_SEN1012_REAL01_F.mp4",
+        "duration": 6.75,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.268,
+            "end": 2.54,
+            "attributes": [
+                {
+                    "name": "자판기"
+                }
+            ]
+        },
+        {
+            "start": 2.638,
+            "end": 3.311,
+            "attributes": [
+                {
+                    "name": "어디"
+                }
+            ]
+        },
+        {
+            "start": 3.418,
+            "end": 4.918,
+            "attributes": [
+                {
+                    "name": "길"
+                }
+            ]
+        }
+    ]
+}

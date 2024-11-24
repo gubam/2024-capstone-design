@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_emyou0226/NIA_SL_SEN0205_REAL01_D.mp4",
+        "name": "NIA_SL_SEN0205_REAL01_D.mp4",
+        "duration": 5.684,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 2.123,
+            "end": 3.662,
+            "attributes": [
+                {
+                    "name": "마포대교"
+                }
+            ]
+        },
+        {
+            "start": 3.94,
+            "end": 4.755,
+            "attributes": [
+                {
+                    "name": "가다"
+                }
+            ]
+        }
+    ]
+}

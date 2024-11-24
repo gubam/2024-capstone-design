@@ -1,0 +1,28 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_gdchoi0236/NIA_SL_SEN0504_REAL01_L.mp4",
+        "name": "NIA_SL_SEN0504_REAL01_L.mp4",
+        "duration": 3.684,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 0.928,
+            "end": 1.354,
+            "attributes": [
+                {
+                    "name": "차"
+                }
+            ]
+        },
+        {
+            "start": 1.447,
+            "end": 2.617,
+            "attributes": [
+                {
+                    "name": "내리다"
+                }
+            ]
+        }
+    ]
+}

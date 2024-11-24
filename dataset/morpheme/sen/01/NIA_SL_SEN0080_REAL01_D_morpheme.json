@@ -1,0 +1,37 @@
+{
+    "metaData": {
+        "url": "https://blackolivevideo.blob.core.windows.net/sign-language/1029_bkyu0233/NIA_SL_SEN0080_REAL01_D.mp4",
+        "name": "NIA_SL_SEN0080_REAL01_D.mp4",
+        "duration": 6.15,
+        "exportedOn": "2020/12/10"
+    },
+    "data": [
+        {
+            "start": 1.79,
+            "end": 2.453,
+            "attributes": [
+                {
+                    "name": "여기"
+                }
+            ]
+        },
+        {
+            "start": 2.612,
+            "end": 3.112,
+            "attributes": [
+                {
+                    "name": "서울"
+                }
+            ]
+        },
+        {
+            "start": 3.258,
+            "end": 4.364,
+            "attributes": [
+                {
+                    "name": "지하철"
+                }
+            ]
+        }
+    ]
+}
