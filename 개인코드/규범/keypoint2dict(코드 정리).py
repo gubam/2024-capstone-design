@@ -5,10 +5,8 @@ import numpy as np
 mp_drawing = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
 
-# 소스 경로 캠 연결시 0 or 1
 VIDEO_PATH = "C:/Users/SAMSUNG/Downloads/KakaoTalk_20241025_181310548.mp4"
 
-#소스연결
 cap = cv2.VideoCapture(VIDEO_PATH)
 
 
@@ -56,7 +54,6 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
             for idx, landmark in enumerate(results.pose_landmarks.landmark[11:23]):  # 11~22번만 추출
                 temp_point[2].append( [landmark.x , landmark.y, landmark.z] )
 
-            # Draw only landmarks 11 to 22
             mp_drawing.draw_landmarks(
                 image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
                 mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=4),
@@ -71,13 +68,10 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         pointDic["left"] = temp_point[1]
         pointDic["body"] = temp_point[2]
 
-        # Display the resulting frame
         cv2.imshow('image', image)
         print(pointDic)
-        # Exit loop when 'q' is pressed
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
-# Release webcam and close windows
 cap.release()
 cv2.destroyAllWindows()
