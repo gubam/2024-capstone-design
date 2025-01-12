@@ -1,3 +1,13 @@
+"""
+keypoint 추출을 위한 코드
+
+해당 함수의 입력은 cv2의 capture frame
+출력은 오른손 왼손 몸의 nparray
+
+오른손, 왼손 각각 20point
+상체는 12point(11 ~ 22)
+numpy array로 출력하기
+"""
 import mediapipe as mp
 import cv2
 import numpy as np
@@ -5,16 +15,9 @@ import numpy as np
 mp_drawing = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
 
-VIDEO_PATH = "C:/Users/SAMSUNG/Downloads/KakaoTalk_20241025_181310548.mp4"
+def keypoint(frame):
+    with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
 
-cap = cv2.VideoCapture(VIDEO_PATH)
-
-
-with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
         # 0 : 오른손, 1 : 왼손, 2 : 상체
         temp_point = [0,0,0]
         pointDic ={}
@@ -54,6 +57,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
             for idx, landmark in enumerate(results.pose_landmarks.landmark[11:23]):  # 11~22번만 추출
                 temp_point[2].append( [landmark.x , landmark.y, landmark.z] )
 
+            # Draw only landmarks 11 to 22
             mp_drawing.draw_landmarks(
                 image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
                 mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=4),
@@ -67,11 +71,11 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         pointDic["right"] = temp_point[0]
         pointDic["left"] = temp_point[1]
         pointDic["body"] = temp_point[2]
+        
+        result = pointDic.items()
+        data = list(result)
+        nparray = np.array(data)
 
-        cv2.imshow('image', image)
-        print(pointDic)
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
+        return nparray
 
-cap.release()
-cv2.destroyAllWindows()
+

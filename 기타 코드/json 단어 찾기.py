@@ -1,3 +1,10 @@
+'''
+데이터셋의 json 파일에서
+원하는 단어 매칭하는 코드
+word dataset/morpheme/sen와 word의 파일 경로 알맞게 수정하기
+원하는 단어 target_word 설정하기
+'''
+
 import os
 import json
 
