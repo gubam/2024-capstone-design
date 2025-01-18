@@ -43,7 +43,6 @@ print(f"Found {len(found_files)} files containing the word '{target_word}' in at
 for file in found_files:
     print(file[7:14])
 
-
 directory = "C:/Users/gubam/Desktop/word/1"
 
 found_files = []

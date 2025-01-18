@@ -1,3 +1,9 @@
+"""
+keypoint 추출을 위한 함수
+
+테스트 코드 단순하게 경로 영상 
+포인트 좌표 프린트
+"""
 import mediapipe as mp
 import cv2
 import numpy as np

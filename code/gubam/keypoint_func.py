@@ -1,11 +1,12 @@
 """
-keypoint 추출을 위한 코드
+keypoint 추출을 위한 함수
 
-해당 함수의 입력은 cv2의 capture frame
+해당 함수의 입력은 cv2의 capture frame (한프레임 입력)
 출력은 오른손 왼손 몸의 nparray
 
 오른손, 왼손 각각 20point
 상체는 12point(11 ~ 22)
+
 numpy array로 출력하기
 """
 import mediapipe as mp
