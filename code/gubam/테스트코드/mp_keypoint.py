@@ -15,8 +15,14 @@ class keypoint():
         self.mp_drawing = mp_drawing
         self.mp_holistic = mp_holistic
         self.holistic = holistic
-        self.pointDic = {}
-        self.pre_pointDic = {}
+        self.pointDic = {
+            "right" : [0., 0., 0.] *21,
+            "left" : [0., 0., 0.] *21,
+            "body" : [0., 0., 0.] *12}
+        self.pre_pointDic ={
+            "right" : [0., 0., 0.] *21,
+            "left" : [0., 0., 0.] *21,
+            "body" : [0., 0., 0.] *12}
         
         self.kf_right = [KalmanFilterXY() for _ in range(21)]
         self.kf_left = [KalmanFilterXY() for _ in range(21)]
@@ -96,7 +102,7 @@ class keypoint():
             for idx, landmark in enumerate(results.right_hand_landmarks.landmark):
                 x, y = self.kf_right[idx].update(landmark.x, landmark.y)
                 
-                temp.append([x, y, landmark.z])
+                temp.append([landmark.x, landmark.y, landmark.z])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환  
                               
@@ -108,8 +114,8 @@ class keypoint():
         else:
             for i in range(20):
                 x, y = self.kf_right[i].update(
-                    float((self.pre_pointDic["right"])[i][0]), 
-                    float((self.pre_pointDic["right"])[i][1])
+                    self.pre_pointDic["right"][i][0], 
+                    self.pre_pointDic["right"][i][1]
                     )
                 temp.append([x, y, float((self.pre_pointDic.get("right"))[i][2])])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환

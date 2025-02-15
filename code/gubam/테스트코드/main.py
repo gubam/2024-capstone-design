@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import mp_keypoint
 
-VIDEO_SRC = "C:/Users/gubam/Desktop/수어 데이터셋/원본영상/오른쪽_WORD1343.mp4"
+VIDEO_SRC = 0
 
 #미디어파이프 인스턴스 선언 부분
 
