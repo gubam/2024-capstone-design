@@ -11,18 +11,22 @@ import copy
 
 class keypoint():
     
-    def __init__(self, mp_drawing ,mp_holistic ,holistic):
+    def __init__(self, mp_drawing, mp_holistic, holistic, kf_sw = True):
         self.mp_drawing = mp_drawing
         self.mp_holistic = mp_holistic
         self.holistic = holistic
+        self.kf_sw = kf_sw
+        
         self.pointDic = {
-            "right" : [0., 0., 0.] *21,
-            "left" : [0., 0., 0.] *21,
-            "body" : [0., 0., 0.] *12}
+            "right" : [[0., 0., 0.] for _ in range(21)],
+            "left" : [[0., 0., 0.] for _ in range(21)],
+            "body" : [[0., 0., 0.] for _ in range(12)]}
         self.pre_pointDic ={
-            "right" : [0., 0., 0.] *21,
-            "left" : [0., 0., 0.] *21,
-            "body" : [0., 0., 0.] *12}
+            "right" : [[0., 0., 0.] for _ in range(21)],
+            "left" : [[0., 0., 0.] for _ in range(21)],
+            "body" : [[0., 0., 0.] for _ in range(12)]}
+        
+        #sw = True면 칼만필터 적용
         
         self.kf_right = [KalmanFilterXY() for _ in range(21)]
         self.kf_left = [KalmanFilterXY() for _ in range(21)]
@@ -46,51 +50,7 @@ class keypoint():
         data = list(result)
 
         return frame, data
-
-
-    # 그리기 파트(mp이용), point값 추출
-    def mp_drawing_point(self, results):
-        
-        temp = []
-        if results.right_hand_landmarks:
-            self.mp_drawing.draw_landmarks(
-                self.frame, results.right_hand_landmarks, self.mp_holistic.HAND_CONNECTIONS,
-                self.mp_drawing.DrawingSpec(color=(80,44,121), thickness=2, circle_radius=2)
-            )
-            for idx, landmark in enumerate(results.right_hand_landmarks.landmark):
-                temp.append([landmark.x, landmark.y, landmark.z])
-        else:
-            for i in range(20):
-                temp.append([-1, -1, -1])
-        self.pointDic["right"] = temp
-        
-        temp = []
-        # 왼손 랜드마크 처리
-        if results.left_hand_landmarks:
-            self.mp_drawing.draw_landmarks(
-                self.frame, results.left_hand_landmarks, self.mp_holistic.HAND_CONNECTIONS,
-                self.mp_drawing.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)
-            )
-            for idx, landmark in enumerate(results.left_hand_landmarks.landmark):
-                temp.append([landmark.x, landmark.y, landmark.z])
-        else:
-            for i in range(20):
-                temp.append([-1, -1, -1])
-        self.pointDic["left"] = temp
-        
-        temp = []
-        # 바디 랜드마크 처리 (11-22번)
-        if results.pose_landmarks:
-            for idx, landmark in enumerate(results.pose_landmarks.landmark[11:23]):
-                temp.append([landmark.x, landmark.y, landmark.z])
-            self.mp_drawing.draw_landmarks(
-                self.frame, results.pose_landmarks, self.mp_holistic.POSE_CONNECTIONS,
-                self.mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
-            )
-        else:
-            for i in range(12):
-                temp.append([-1, -1, -1])
-            self.pointDic["body"] = temp
+    
             
     # 그리기 파트(cv2 이용), point값 추출            
     def cv2_drawing_point(self, results): 
@@ -100,12 +60,15 @@ class keypoint():
         temp = []
         if results.right_hand_landmarks:
             for idx, landmark in enumerate(results.right_hand_landmarks.landmark):
-                x, y = self.kf_right[idx].update(landmark.x, landmark.y)
                 
+                if(self.kf_sw):
+                    x, y = self.kf_right[idx].update(landmark.x, landmark.y)
+                else:
+                    x, y = landmark.x, landmark.y
+                    
                 temp.append([landmark.x, landmark.y, landmark.z])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환  
-                              
                 cv2.circle(self.frame, (x, y), 5, (0, 255, 0), -1)  # 초록색 원
                 
             self.pointDic["right"] = temp
@@ -113,10 +76,14 @@ class keypoint():
                 
         else:
             for i in range(20):
-                x, y = self.kf_right[i].update(
-                    self.pre_pointDic["right"][i][0], 
-                    self.pre_pointDic["right"][i][1]
-                    )
+                if(self.kf_sw):
+                    x, y = self.kf_right[i].update(
+                        self.pre_pointDic["right"][i][0], 
+                        self.pre_pointDic["right"][i][1]
+                        )
+                else:
+                    x, y =self.pre_pointDic["right"][i][0], self.pre_pointDic["right"][i][1]
+                    
                 temp.append([x, y, float((self.pre_pointDic.get("right"))[i][2])])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
@@ -127,8 +94,12 @@ class keypoint():
         temp = []
         if results.left_hand_landmarks:
             for idx, landmark in enumerate(results.left_hand_landmarks.landmark):
-                x, y = self.kf_left[idx].update(landmark.x, landmark.y)
                 
+                if(self.kf_sw):
+                    x, y = self.kf_left[idx].update(landmark.x, landmark.y)
+                else:
+                    x, y = landmark.x, landmark.y
+                    
                 temp.append([x, y, landmark.z])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
@@ -138,10 +109,14 @@ class keypoint():
                 self.pre_pointDic["left"] = self.pointDic["left"]
         else:
             for i in range(20):
-                x, y = self.kf_left[i].update(
-                    float((self.pre_pointDic["left"])[i][0]), 
-                    float((self.pre_pointDic["left"])[i][1])
-                    )
+                if(self.kf_sw):
+                    x, y = self.kf_left[i].update(
+                        float((self.pre_pointDic["left"])[i][0]), 
+                        float((self.pre_pointDic["left"])[i][1])
+                        )
+                else:
+                    x, y =self.pre_pointDic["left"][i][0], self.pre_pointDic["left"][i][1]
+                    
                 temp.append([x, y, float((self.pre_pointDic.get("left"))[i][2])])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
@@ -154,23 +129,28 @@ class keypoint():
         if results.pose_landmarks:
             for idx, landmark in enumerate(results.pose_landmarks.landmark[11:23]):
                 
-                x, y = self.kf_body[idx].update(landmark.x, landmark.y)
-                
+                if(self.kf_sw):
+                    x, y = self.kf_body[idx].update(landmark.x, landmark.y)
+                else:
+                    x, y = landmark.x, landmark.y
+                    
                 temp.append([x, y, landmark.z])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
-                
-
                 cv2.circle(self.frame, (x, y), 5, (0, 0, 255), -1)  # 빨간색 원
                 self.pointDic["body"] = temp
                 self.pre_pointDic["body"] = self.pointDic["body"]
         else:
             for i in range(12):
-                x, y = self.kf_body[i].update(
-                    float((self.pre_pointDic["body"])[i][0]), 
-                    float((self.pre_pointDic["body"])[i][1])
-                    )
-                temp.append([x, y, float((self.pre_pointDic.get("lbodyeft"))[i][2])])
+                if(self.kf_sw):
+                    x, y = self.kf_body[i].update(
+                        float((self.pre_pointDic["body"])[i][0]), 
+                        float((self.pre_pointDic["body"])[i][1])
+                        )
+                else:
+                    x, y =self.pre_pointDic["body"][i][0], self.pre_pointDic["body"][i][1]
+                    
+                temp.append([x, y, float((self.pre_pointDic.get("body"))[i][2])])
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
                 cv2.circle(self.frame, (x, y), 5, (0, 0, 255), -1)  # 초록색 원
