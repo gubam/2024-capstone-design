@@ -1,16 +1,15 @@
 """
 keypoint 추출 모듈
 포인트 -> 칼만필터(추후 구현) -> 벡터화 -> 리턴
+
 """
 import cv2
 import numpy as np
-import copy
+import math
 
 # 0 : 오른손, 1 : 왼손, 2 : 상체
-#frame은 원본 이미지, results는 미디어파이프 통과 데이터?
+class keypoint:
 
-class keypoint():
-    
     def __init__(self, mp_drawing, mp_holistic, holistic, kf_sw = True):
         self.mp_drawing = mp_drawing
         self.mp_holistic = mp_holistic
@@ -42,18 +41,14 @@ class keypoint():
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = self.holistic.process(image)
 
-        self.cv2_drawing_point(results)
+        self._cv2_drawing_point(results)
 
-        #추출한 좌표 리스트 "right" value값 넣기
-        result = self.pointDic.items()
+        output = self._vectorization(self.pointDic)
         
-        data = list(result)
+        return frame, output
 
-        return frame, data
-    
-            
     # 그리기 파트(cv2 이용), point값 추출            
-    def cv2_drawing_point(self, results): 
+    def _cv2_drawing_point(self, results): 
             # 각 관절 좌표 그리기 (오른손, 왼손, 상체)
         
         # 오른손 랜드마크 그리기
@@ -154,20 +149,82 @@ class keypoint():
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
                 cv2.circle(self.frame, (x, y), 5, (0, 0, 255), -1)  # 초록색 원
+                
+# 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
+    def _vectorization(self, keypoint):
+        output =[]
+        #print(keypoint["right"])
+        output.append(self._hand_vector(keypoint["right"]))
+        # output.append(self._hand_vector(keypoint["left"]))
+        # output.append(self._body_vector(keypoint["body"]))
+        return output
         
-        
-        
-        #def kalmanfilter():
+    # x,y,z 포인트 21개 리스트로 들어옴 21 * 3
+    def _hand_vector(self, hand_point):
+        output = []
+        Z_output = 0
+        #print(hand_point[0])
+        for i in range(20):
+            output[i] = self._unit_vector( self._vector_XY(hand_point[i], hand_point[i+1]))
             
-        # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
-        #def vectoriaztion(keypoint):
-
+            if hand_point[i][2] < 0:
+                Z_output-=1
+            else:
+                Z_output+=1
+        if Z_output < 0:
+            Z_output = 0
+        else:
+            Z_output = 1
+            
+        output.append(Z_output)
+        
+        return output
+    
+    def _body_vector(self, body_point):
+        output = []
+        Z_output = 0
+        print(self._vector_XY(body_point[0], body_point[1]))
+        for i in range(12):
+            output[i] = self._unit_vector( self._vector_XY(body_point[i], body_point[i+1]))
+            
+            if body_point[i][2] < 0:
+                Z_output-=1
+            else:
+                Z_output+=1
+        if Z_output < 0:
+            Z_output = 0
+        else:
+            Z_output = 1
+            
+        output.append(Z_output)
+        
+        return output          
+        
+    #두개의 포인트 입력하면 두 점의 XY 벡터 추출
+    def _vector_XY(point1, point2):
+        outputXY = []
+        outputXY[0] = point2[0] - point1[0]
+        outputXY[1] = point2[1] - point1[1]   
+        return outputXY
+        
+        
+    #vector input [0] = x, [1] = y
+    def _unit_vector(vector):
+        x, y = vector[0], vector[1]
+        mag = math.sqrt( x**2 + y**2 )
+        output = [x / mag , y / mag]
+        return output
+    
+    
+        
+#GPT가 작성 잘모름
 class KalmanFilterXY:
+    
     def __init__(self):
         self.kf = cv2.KalmanFilter(4, 2)  # 4개 상태 변수(x, y, vx, vy), 2개 측정 변수(x, y)
         dt = 1  # 시간 간격 (프레임 단위)
 
-        # 상태 전이 행렬 (State Transition Matrix)
+        # 상태 전이 행렬 
         self.kf.transitionMatrix = np.array([
             [1, 0, dt, 0],
             [0, 1, 0, dt],
@@ -175,22 +232,22 @@ class KalmanFilterXY:
             [0, 0, 0, 1]
         ], dtype=np.float32)
 
-        # 측정 행렬 (Measurement Matrix)
+        # 측정 행렬
         self.kf.measurementMatrix = np.array([
             [1, 0, 0, 0],
             [0, 1, 0, 0]
         ], dtype=np.float32)
 
-        # 프로세스 노이즈 공분산 행렬 (Process Noise Covariance)
+        # 프로세스 노이즈 공분산 행렬
         self.kf.processNoiseCov = np.eye(4, dtype=np.float32) * 1e-2
 
-        # 측정 노이즈 공분산 행렬 (Measurement Noise Covariance)
+        # 측정 노이즈 공분산 행렬
         self.kf.measurementNoiseCov = np.eye(2, dtype=np.float32) * 1e-1
 
-        # 초기 상태값 (State Post)
+        # 초기 상태값
         self.kf.statePost = np.zeros((4, 1), dtype=np.float32)
 
-        # 🔥 이전 좌표를 저장 (손이 사라졌을 때 사용)
+        # 이전 좌표를 저장 (손이 사라졌을 때 사용)
         self.last_x, self.last_y = None, None
 
     def update(self, x, y):
@@ -206,7 +263,5 @@ class KalmanFilterXY:
         measurement = np.array([[x], [y]], dtype=np.float32)
         corrected = self.kf.correct(measurement)  # 보정 단계
 
-        # 🔥 최신 좌표 업데이트
-        self.last_x, self.last_y = corrected[0, 0], corrected[1, 0]
 
         return corrected[0, 0], corrected[1, 0]  # 보정된 (x, y) 반환
