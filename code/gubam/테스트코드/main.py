@@ -8,7 +8,8 @@ VIDEO_SRC = "C:/Users/gubam/Desktop/수어 데이터셋/원본영상/나_WORD115
 
 keypoint = mp_keypoint.keypoint(mp.solutions.drawing_utils,
                                 mp.solutions.holistic,
-                                mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5))
+                                mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5),
+                                kf_sw = True)
 
 cap = cv2.VideoCapture(VIDEO_SRC)
 

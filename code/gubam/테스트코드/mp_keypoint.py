@@ -1,7 +1,10 @@
 """
 keypoint 추출 모듈
 포인트 -> 칼만필터(추후 구현) -> 벡터화 -> 리턴
-
+z 축은 hand만 추출 0, 1가짐 앞,뒤 기억안나
+추후 할일 
+1. flatten
+2. 초기값 설정
 """
 import cv2
 import numpy as np
@@ -9,21 +12,25 @@ import math
 
 # 0 : 오른손, 1 : 왼손, 2 : 상체
 class keypoint:
-
+    '''
+    파라미터각 인스턴스 넣어주기
+    kf_sw는 칼만필터 on/off
+    
+    '''
     def __init__(self, mp_drawing, mp_holistic, holistic, kf_sw = True):
         self.mp_drawing = mp_drawing
         self.mp_holistic = mp_holistic
         self.holistic = holistic
         self.kf_sw = kf_sw
-        
+        # 추후 초기값 결정
         self.pointDic = {
-            "right" : [[0., 0., 0.] for _ in range(21)],
-            "left" : [[0., 0., 0.] for _ in range(21)],
-            "body" : [[0., 0., 0.] for _ in range(12)]}
+            "right" : [[0.1, 0.1, 0.1] for _ in range(21)],
+            "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
+            "body" : [[0.1, 0.1, 0.1] for _ in range(12)]}
         self.pre_pointDic ={
-            "right" : [[0., 0., 0.] for _ in range(21)],
-            "left" : [[0., 0., 0.] for _ in range(21)],
-            "body" : [[0., 0., 0.] for _ in range(12)]}
+            "right" : [[0.1, 0.1, 0.1] for _ in range(21)],
+            "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
+            "body" : [[0.1, 0.1, 0.1] for _ in range(12)]}
         
         #sw = True면 칼만필터 적용
         
@@ -153,9 +160,9 @@ class keypoint:
 # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
     def _vectorization(self, keypoint):
         output =[]
-        output.append(self._unit_vector(self._hand_vector(keypoint["right"])))
-        output.append(self._unit_vector(self._hand_vector(keypoint["left"])))
-        output.append(self._unit_vector(self._body_vector(keypoint["body"])))
+        output.append(self._hand_vector(keypoint["right"]))
+        output.append(self._hand_vector(keypoint["left"]))
+        output.append(self._body_vector(keypoint["body"]))
         return output
         
     # x,y,z 포인트 21개 리스트로 들어옴 21 * 3
@@ -209,7 +216,9 @@ class keypoint:
     def _unit_vector(self, vector):
         x, y = vector[0], vector[1]
         mag = math.sqrt( x**2 + y**2 )
-        output = [x / mag , y / mag]
+        unit_x = float(f"{(x / mag):.7f}")
+        unit_y = float(f"{(y / mag):.7f}")
+        output = [unit_x, unit_y]
         return output
     
     
