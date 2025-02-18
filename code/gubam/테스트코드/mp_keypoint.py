@@ -153,20 +153,18 @@ class keypoint:
 # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
     def _vectorization(self, keypoint):
         output =[]
-        #print(keypoint["right"])
-        output.append(self._hand_vector(keypoint["right"]))
-        # output.append(self._hand_vector(keypoint["left"]))
-        # output.append(self._body_vector(keypoint["body"]))
+        output.append(self._unit_vector(self._hand_vector(keypoint["right"])))
+        output.append(self._unit_vector(self._hand_vector(keypoint["left"])))
+        output.append(self._unit_vector(self._body_vector(keypoint["body"])))
         return output
         
     # x,y,z 포인트 21개 리스트로 들어옴 21 * 3
     def _hand_vector(self, hand_point):
         output = []
         Z_output = 0
-        #print(hand_point[0])
         for i in range(20):
-            output[i] = self._unit_vector( self._vector_XY(hand_point[i], hand_point[i+1]))
-            
+            output.append(self._unit_vector( self._vector_XY(hand_point[i], hand_point[i+1])))
+
             if hand_point[i][2] < 0:
                 Z_output-=1
             else:
@@ -183,9 +181,8 @@ class keypoint:
     def _body_vector(self, body_point):
         output = []
         Z_output = 0
-        print(self._vector_XY(body_point[0], body_point[1]))
-        for i in range(12):
-            output[i] = self._unit_vector( self._vector_XY(body_point[i], body_point[i+1]))
+        for i in range(11):
+            output.append(self._unit_vector( self._vector_XY(body_point[i], body_point[i+1])))
             
             if body_point[i][2] < 0:
                 Z_output-=1
@@ -201,15 +198,15 @@ class keypoint:
         return output          
         
     #두개의 포인트 입력하면 두 점의 XY 벡터 추출
-    def _vector_XY(point1, point2):
-        outputXY = []
+    def _vector_XY(self, point1, point2):
+        outputXY = [0, 0]
         outputXY[0] = point2[0] - point1[0]
         outputXY[1] = point2[1] - point1[1]   
         return outputXY
         
         
     #vector input [0] = x, [1] = y
-    def _unit_vector(vector):
+    def _unit_vector(self, vector):
         x, y = vector[0], vector[1]
         mag = math.sqrt( x**2 + y**2 )
         output = [x / mag , y / mag]
