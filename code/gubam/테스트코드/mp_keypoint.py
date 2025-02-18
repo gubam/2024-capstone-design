@@ -7,10 +7,18 @@ import numpy as np
 import copy
 
 # 0 : 오른손, 1 : 왼손, 2 : 상체
+<<<<<<< Updated upstream
 #frame은 원본 이미지, results는 미디어파이프 통과 데이터?
 
 class keypoint():
     
+=======
+class keypoint:
+    '''
+    keypoint 그리고 벡터로 출력내주는 클래스
+    4번째 인수는 kalman filter ON/OFF
+    '''
+>>>>>>> Stashed changes
     def __init__(self, mp_drawing, mp_holistic, holistic, kf_sw = True):
         self.mp_drawing = mp_drawing
         self.mp_holistic = mp_holistic

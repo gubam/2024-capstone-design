@@ -2,9 +2,13 @@ import cv2
 import mediapipe as mp
 import mp_keypoint
 
+<<<<<<< Updated upstream
 VIDEO_SRC = 0
 
 #미디어파이프 인스턴스 선언 부분
+=======
+VIDEO_SRC = "c:/Users/82109/Desktop/수어영상/나_WORD1157.mp4"
+>>>>>>> Stashed changes
 
 keypoint = mp_keypoint.keypoint(mp.solutions.drawing_utils,
                                 mp.solutions.holistic,
