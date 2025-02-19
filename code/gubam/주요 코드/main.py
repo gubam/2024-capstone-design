@@ -20,8 +20,8 @@ while cap.isOpened():
     
     image, output = keypoint.extract_keypoint(frame)
     
-    print(output)
-    print()
+    #print(output)
+    #print()
     cv2.imshow('video',cv2.resize(image,dsize=(960,540)))
     
     if cv2.waitKey(10) & 0xFF == ord('q'):

@@ -39,22 +39,34 @@ class keypoint:
         self.kf_right = [KalmanFilterXY() for _ in range(21)]
         self.kf_left = [KalmanFilterXY() for _ in range(21)]
         self.kf_body = [KalmanFilterXY() for _ in range(12)]
+        
+        self.intial = False
+        
     
     #주요 메서드
     def extract_keypoint(self, frame):
         
-        #초기화
-        self.frame = frame
-        
-        image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = self.holistic.process(image)
+        self.__initialization()
+        if self.inital:
+            print()
+            #초기화
+            self.frame = frame
+            
+            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = self.holistic.process(image)
 
-        self._cv2_drawing_point(results)
+            self._cv2_drawing_point(results)
 
-        output = self._vectorization(self.pointDic)
+            output = self._vectorization(self.pointDic)
+            
+            output = self._flatten(output)
+            print("현재__________________________________")
+            print(self.pointDic)
+            print("이전__________________________________")
+            print(self.pre_pointDic)
+
+            return frame, output
         
-        output = self._flatten(output)
-        return frame, output
 
     # 그리기 파트(cv2 이용), point값 추출            
     def _cv2_drawing_point(self, results): 
@@ -75,8 +87,9 @@ class keypoint:
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환  
                 cv2.circle(self.frame, (x, y), 5, (0, 255, 0), -1)  # 초록색 원
                 
+            self.pre_pointDic["right"] = self.pointDic["right"]    
             self.pointDic["right"] = temp
-            self.pre_pointDic["right"] = self.pointDic["right"]
+            
                 
         else:
             for i in range(20):
@@ -109,8 +122,8 @@ class keypoint:
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
 
                 cv2.circle(self.frame, (x, y), 5, (255, 0, 0), -1)  # 파란색 원
-                self.pointDic["left"] = temp
                 self.pre_pointDic["left"] = self.pointDic["left"]
+                self.pointDic["left"] = temp
         else:
             for i in range(20):
                 if(self.kf_sw):
@@ -142,8 +155,8 @@ class keypoint:
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
                 cv2.circle(self.frame, (x, y), 5, (0, 0, 255), -1)  # 빨간색 원
-                self.pointDic["body"] = temp
                 self.pre_pointDic["body"] = self.pointDic["body"]
+                self.pointDic["body"] = temp
         else:
             for i in range(12):
                 if(self.kf_sw):
@@ -158,7 +171,7 @@ class keypoint:
                 x = int(x * self.frame.shape[1])  # 이미지 너비로 변환
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
                 cv2.circle(self.frame, (x, y), 5, (0, 0, 255), -1)  # 초록색 원
-                
+           
 # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
     def _vectorization(self, keypoint):
         output =[]
@@ -233,6 +246,10 @@ class keypoint:
                 output.append(temp[1])
         return output
     
+    def __initialization(self):
+        self.intial = True
+            
+        
     
         
 #GPT가 작성 잘모름
