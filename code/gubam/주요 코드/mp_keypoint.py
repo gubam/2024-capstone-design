@@ -2,9 +2,11 @@
 keypoint 추출 모듈
 포인트 -> 칼만필터(추후 구현) -> 벡터화 -> 리턴
 z 축은 hand만 추출 0, 1가짐 앞,뒤 기억안나
+내부 extract_keypointrk 주요함수
+해당함수의 출력은 frame과 벡터화된 좌표
 추후 할일 
-1. flatten
-2. 초기값 설정
+1. 초기값 설정
+2. 모션 스코어를 이용한 샘플링
 """
 import cv2
 import numpy as np
@@ -15,7 +17,7 @@ class keypoint:
     '''
     파라미터각 인스턴스 넣어주기
     kf_sw는 칼만필터 on/off
-    
+    출력은 frame과 단일 프레임 벡터 좌표
     '''
     def __init__(self, mp_drawing, mp_holistic, holistic, kf_sw = True):
         self.mp_drawing = mp_drawing
@@ -42,7 +44,6 @@ class keypoint:
     def extract_keypoint(self, frame):
         
         #초기화
-        self.pointDic = {}
         self.frame = frame
         
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -52,6 +53,7 @@ class keypoint:
 
         output = self._vectorization(self.pointDic)
         
+        output = self._flatten(output)
         return frame, output
 
     # 그리기 파트(cv2 이용), point값 추출            
@@ -177,9 +179,9 @@ class keypoint:
             else:
                 Z_output+=1
         if Z_output < 0:
-            Z_output = 0
+            Z_output = [0 , 0]
         else:
-            Z_output = 1
+            Z_output = [1 , 1]
             
         output.append(Z_output)
         
@@ -196,9 +198,9 @@ class keypoint:
             else:
                 Z_output+=1
         if Z_output < 0:
-            Z_output = 0
+            Z_output = [0 , 0]
         else:
-            Z_output = 1
+            Z_output = [1 , 1]
             
         output.append(Z_output)
         
@@ -219,6 +221,16 @@ class keypoint:
         unit_x = float(f"{(x / mag):.7f}")
         unit_y = float(f"{(y / mag):.7f}")
         output = [unit_x, unit_y]
+        return output
+    
+    def _flatten(self, list):
+        output = []
+        for list in enumerate(list):
+            temp = list[1]
+            for temp in enumerate(temp):
+                temp = temp[1]
+                output.append(temp[0])
+                output.append(temp[1])
         return output
     
     
