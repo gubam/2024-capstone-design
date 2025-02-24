@@ -11,6 +11,7 @@ z 축은 hand만 추출 0, 1가짐 앞,뒤 기억안나
 import cv2
 import numpy as np
 import math
+import mediapipe as mp
 
 # 0 : 오른손, 1 : 왼손, 2 : 상체
 class keypoint:
@@ -19,10 +20,11 @@ class keypoint:
     kf_sw는 칼만필터 on/off
     출력은 frame과 단일 프레임 벡터 좌표
     '''
-    def __init__(self, mp_drawing, mp_holistic, holistic, kf_sw = True):
-        self.mp_drawing = mp_drawing
-        self.mp_holistic = mp_holistic
-        self.holistic = holistic
+
+    def __init__(self, kf_sw = True):
+        self.mp_drawing = mp.solutions.drawing_utils
+        self.mp_holistic = mp.solutions.holistic
+        self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
         self.kf_sw = kf_sw
         # 추후 초기값 결정
         self.pointDic = {
@@ -40,14 +42,13 @@ class keypoint:
         self.kf_left = [KalmanFilterXY() for _ in range(21)]
         self.kf_body = [KalmanFilterXY() for _ in range(12)]
         
-        self.intial = False
+        self.initial = True
         
     
     #주요 메서드
     def extract_keypoint(self, frame):
         
-        self.__initialization()
-        if self.inital:
+        if self.initial:
             print()
             #초기화
             self.frame = frame
@@ -60,12 +61,11 @@ class keypoint:
             output = self._vectorization(self.pointDic)
             
             output = self._flatten(output)
-            print("현재__________________________________")
-            print(self.pointDic)
-            print("이전__________________________________")
-            print(self.pre_pointDic)
 
             return frame, output
+        else:
+            self.__initialization()
+
         
 
     # 그리기 파트(cv2 이용), point값 추출            
