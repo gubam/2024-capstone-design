@@ -12,7 +12,8 @@ import cv2
 import numpy as np
 import math
 import mediapipe as mp
-
+import json
+import os
 # 0 : 오른손, 1 : 왼손, 2 : 상체
 class keypoint:
     '''
@@ -49,7 +50,6 @@ class keypoint:
     def extract_keypoint(self, frame):
         
         if self.initial:
-            print()
             #초기화
             self.frame = frame
             
@@ -249,7 +249,27 @@ class keypoint:
     def __initialization(self):
         self.intial = True
             
+
+class SaveJson:
+    '''
+    경로, 폴더 이름 입력으로 넣기
+    '''
+    def __init__(self, SAVE_PATH, FOLDER_NAME):
+        self.count = 1
+        self.SAVE_PATH = SAVE_PATH
+        self.FOLDER_NAME = FOLDER_NAME
+        self.directory = f"{self.SAVE_PATH}/{self.FOLDER_NAME}"
+
+    def save_data(self, data):
+        filename = f"{self.directory}/{self.count}.json"
         
+        if not os.path.exists(self.directory):  # 디렉토리가 없으면 생성
+            os.mkdir(self.directory)
+
+    
+        with open(filename, "w", encoding="utf-8") as outfile:
+            json.dump(data, outfile, indent=4, ensure_ascii=False)
+        self.count += 1
     
         
 #GPT가 작성 잘모름
