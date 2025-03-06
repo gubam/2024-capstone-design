@@ -1,7 +1,7 @@
 """
 keypoint 추출 모듈
 포인트 -> 칼만필터(추후 구현) -> 벡터화 -> 리턴
-z 축은 hand만 추출 0, 1가짐 앞,뒤 기억안나
+z 축은 hand만 추출 0, 1가짐 앞,뒤 기억안나(txt 파일 확인)
 내부 extract_keypointrk 주요함수
 해당함수의 출력은 frame과 벡터화된 좌표
 추후 할일 
@@ -27,7 +27,7 @@ class keypoint:
         self.mp_holistic = mp.solutions.holistic
         self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
         self.kf_sw = kf_sw
-        # 추후 초기값 결정
+        # 추후 초기값 결정 pre 값은 추출안될때
         self.pointDic = {
             "right" : [[0.1, 0.1, 0.1] for _ in range(21)],
             "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
@@ -44,6 +44,7 @@ class keypoint:
         self.kf_body = [KalmanFilterXY() for _ in range(12)]
         
         self.initial = True
+        self.score = 0
         
     
     #주요 메서드
@@ -60,8 +61,13 @@ class keypoint:
 
             output = self._vectorization(self.pointDic)
             
+            pre_output = self._vectorization(self.pre_pointDic)
+            
+            pre_output = self._flatten(pre_output)
             output = self._flatten(output)
-
+            
+            self.score = self.__score(output, pre_output)
+            
             return frame, output
         else:
             self.__initialization()
@@ -231,6 +237,8 @@ class keypoint:
     def _unit_vector(self, vector):
         x, y = vector[0], vector[1]
         mag = math.sqrt( x**2 + y**2 )
+        if(mag == 0 ):
+            mag = 0.000001
         unit_x = float(f"{(x / mag):.7f}")
         unit_y = float(f"{(y / mag):.7f}")
         output = [unit_x, unit_y]
@@ -248,7 +256,17 @@ class keypoint:
     
     def __initialization(self):
         self.intial = True
-            
+       
+
+    def __score(self, point ,pre_point):
+        sum = 0
+        
+        for i in range(108):
+            sum += (point[i] - pre_point[i])
+        
+        sum = abs(sum)
+        float(f"{(sum):.7f}")
+        return sum
 
 class SaveJson:
     '''
