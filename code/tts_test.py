@@ -1,4 +1,8 @@
-#pip install gtts
+'''
+Google Text-to-Speech
+pip install gtts
+'''
+
 from gtts import gTTS
 import os
 
