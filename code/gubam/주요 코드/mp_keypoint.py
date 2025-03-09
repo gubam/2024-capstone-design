@@ -14,12 +14,14 @@ import math
 import mediapipe as mp
 import json
 import os
+import matplotlib.pyplot as plt
 # 0 : 오른손, 1 : 왼손, 2 : 상체
 class keypoint:
     '''
     파라미터각 인스턴스 넣어주기
     kf_sw는 칼만필터 on/off
     출력은 frame과 단일 프레임 벡터 좌표
+    output -> right: 42, left: 42 body: 24
     '''
 
     def __init__(self, kf_sw = True):
@@ -27,7 +29,7 @@ class keypoint:
         self.mp_holistic = mp.solutions.holistic
         self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
         self.kf_sw = kf_sw
-        # 추후 초기값 결정 pre 값은 추출안될때
+        # 추후 초기값 결정 pre 값은 추출안될때(순수 포인트값)
         self.pointDic = {
             "right" : [[0.1, 0.1, 0.1] for _ in range(21)],
             "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
@@ -46,6 +48,12 @@ class keypoint:
         self.initial = True
         self.score = 0
         
+        #벡터변환결과값
+        self.pre_flatvec = []
+        self.flatvec = []
+        
+        self.angle = []
+        
     
     #주요 메서드
     def extract_keypoint(self, frame):
@@ -60,15 +68,17 @@ class keypoint:
             self._cv2_drawing_point(results)
 
             output = self._vectorization(self.pointDic)
-            
             pre_output = self._vectorization(self.pre_pointDic)
             
             pre_output = self._flatten(pre_output)
             output = self._flatten(output)
             
             self.score = self.__score(output, pre_output)
+            self.pre_flatvec = pre_output
+            self.flatvec = output
             
-            return frame, output
+            self.__angle()
+            return frame
         else:
             self.__initialization()
 
@@ -259,15 +269,28 @@ class keypoint:
        
 
     def __score(self, point ,pre_point):
-        sum = 0
         
+        sum = 0
         for i in range(108):
             sum += (point[i] - pre_point[i])
-        
         sum = abs(sum)
         float(f"{(sum):.7f}")
         return sum
-
+    
+    def __angle(self):
+        vec = self.flatvec
+        output = []
+        for i in range(0, 108, 2):
+            x1, x2 = prevec[i], vec[i]
+            y1, y2 = prevec[i+1], vec[i+1]
+            dot = x1 * x2 + y1 * y2
+            
+            angle = np.arccos(np.clip(dot, -1.0, 1.0))
+            
+            output.append(angle)
+        self.angle = output
+            
+        
 class SaveJson:
     '''
     경로, 폴더 이름 입력으로 넣기
