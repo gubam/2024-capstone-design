@@ -53,6 +53,8 @@ class keypoint:
         self.flatvec = []
         
         self.angle = []
+
+        self.Z_data = []
         
     
     #주요 메서드
@@ -79,6 +81,7 @@ class keypoint:
             
             self.__angle()
             return frame
+        
         else:
             self.__initialization()
 
@@ -200,6 +203,7 @@ class keypoint:
     def _hand_vector(self, hand_point):
         output = []
         Z_output = 0
+
         for i in range(20):
             output.append(self._unit_vector( self._vector_XY(hand_point[i], hand_point[i+1])))
 
@@ -212,7 +216,7 @@ class keypoint:
         else:
             Z_output = [1 , 1]
             
-        output.append(Z_output)
+        self.Z_data.append(Z_output)
         
         return output
     
@@ -226,12 +230,13 @@ class keypoint:
                 Z_output-=1
             else:
                 Z_output+=1
+
         if Z_output < 0:
             Z_output = [0 , 0]
         else:
             Z_output = [1 , 1]
             
-        output.append(Z_output)
+        self.Z_data.append(Z_output)
         
         return output          
         
@@ -277,8 +282,24 @@ class keypoint:
         float(f"{(sum):.7f}")
         return sum
     
+    #현재 프레임의 각도 추출
     def __angle(self):
         vec = self.flatvec
+        output = []
+        for i in range(0, 106, 2):
+            x1, x2 = vec[i], vec[i+2]
+            y1, y2 = vec[i+1], vec[i+3]
+            dot = x1 * x2 + y1 * y2
+            angle = np.arccos(np.clip(dot, -1.0, 1.0))
+            output.append(angle)
+            
+        self.angle = output
+
+    #각도 프레임별 차이 추출
+    def __anglediff(self):
+        vec = self.flatvec
+        prevec = self.pre_flatvec
+
         output = []
         for i in range(0, 108, 2):
             x1, x2 = prevec[i], vec[i]
