@@ -194,9 +194,11 @@ class keypoint:
 # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
     def _vectorization(self, keypoint):
         output =[]
+        self.Z_data = []
         output.append(self._hand_vector(keypoint["right"]))
         output.append(self._hand_vector(keypoint["left"]))
         output.append(self._body_vector(keypoint["body"]))
+        output.append(self.Z_data)
         return output
         
     # x,y,z 포인트 21개 리스트로 들어옴 21 * 3
