@@ -46,16 +46,15 @@ class keypoint:
         self.kf_body = [KalmanFilterXY() for _ in range(12)]
         
         self.initial = True
-        self.score = 0
         
-        #벡터변환결과값
+        self.Z_data = []
+
+        ###주로 사용###
+        self.score = 0        
         self.pre_flatvec = []
         self.flatvec = []
-        
         self.angle = []
 
-        self.Z_data = []
-        
     
     #주요 메서드
     def extract_keypoint(self, frame):
