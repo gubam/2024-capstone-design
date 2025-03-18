@@ -28,8 +28,10 @@ class keypoint:
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_holistic = mp.solutions.holistic
         self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+        #sw = True면 칼만필터 적용
         self.kf_sw = kf_sw
-        # 추후 초기값 결정 pre 값은 추출안될때(순수 포인트값)
+        
+        # 이전값 저장용
         self.pointDic = {
             "right" : [[0.1, 0.1, 0.1] for _ in range(21)],
             "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
@@ -39,7 +41,6 @@ class keypoint:
             "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
             "body" : [[0.1, 0.1, 0.1] for _ in range(12)]}
         
-        #sw = True면 칼만필터 적용
         
         self.kf_right = [KalmanFilterXY() for _ in range(21)]
         self.kf_left = [KalmanFilterXY() for _ in range(21)]
@@ -56,7 +57,8 @@ class keypoint:
         self.angle = []
 
     
-    #주요 메서드
+    #주요 메서드 
+    #입력으로 프레임 한개 들어옴
     def extract_keypoint(self, frame):
         
         if self.initial:
@@ -65,7 +67,7 @@ class keypoint:
             
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             results = self.holistic.process(image)
-
+            #그리기
             self._cv2_drawing_point(results)
 
             output = self._vectorization(self.pointDic)
@@ -317,8 +319,8 @@ class SaveJson:
     '''
     경로, 폴더 이름 입력으로 넣기
     '''
-    def __init__(self, SAVE_PATH, FOLDER_NAME):
-        self.count = 1
+    def __init__(self, SAVE_PATH, FOLDER_NAME,name):
+        self.count = name
         self.SAVE_PATH = SAVE_PATH
         self.FOLDER_NAME = FOLDER_NAME
         self.directory = f"{self.SAVE_PATH}/{self.FOLDER_NAME}"

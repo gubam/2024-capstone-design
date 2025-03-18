@@ -16,7 +16,7 @@ class verification:
         self.ax.bar(indices, angles, color='royalblue', alpha=0.7)
         self.ax.set_xlabel("Index")
         self.ax.set_ylabel("Angle (radians)")
-        self.ax.set_title("각도 시각화")
+        self.ax.set_title("angle visualization")
         self.ax.set_ylim(0, 3.2)  # 최대값보다 조금 크게 설정
         self.ax.grid(axis="y", linestyle="--", alpha=0.6)
         
