@@ -1,4 +1,3 @@
-  
 import cv2
 import mp_keypoint
 import verification
@@ -8,53 +7,51 @@ VIDEO_SRC = 영상 경로
 SAVE_PATH = json 저장 경로
 FOLDER_NAME = json 저장 폴더(폴더 안에0,1,2,3...이름의 json이 생성됨)
 '''
-for i in range(10):  
-    name = i
-    VIDEO_SRC = f"C:/Users/gubam/Desktop/수어 데이터셋/원본영상/오른쪽_WORD1343/NIA_SL_WORD1343_REAL0{name}_F.mp4"
-    SAVE_PATH = "C:/Users/gubam/Desktop/json"
-    FOLDER_NAME = "오른쪽"
 
-    #인스턴스 선언 부분
-    keypoint = mp_keypoint.keypoint(kf_sw = True)
-    save =  mp_keypoint.SaveJson(SAVE_PATH, FOLDER_NAME,name)
-    cap = cv2.VideoCapture(VIDEO_SRC)
-    ver = verification.verification()
-    sampling = training.ScoreSampling(100)
+VIDEO_SRC = "C:/Users/82109/Desktop/데이터셋/수어영상 데이터셋/나_WORD1157/NIA_SL_WORD1157_REAL02_F.mp4"
+SAVE_PATH = "C:/Users/gubam/Desktop/json"
+FOLDER_NAME = "오른쪽"
 
-    '''
-    keykeypoint.flatvec 이건 추출 벡터값이고
-    keypoint.angle 이건 추출되는 각도값임
-    순서는 오른손 -> 왼손 -> 몸 - > Z방향 값
-    '''
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-        
-        image = keypoint.extract_keypoint(frame)
-        output = keypoint.flatvec
-        #스코어 비교 인스턴스
-        sampling.sampling(keypoint)
+#인스턴스 선언 부분
+keypoint = mp_keypoint.keypoint(kf_sw = True)
+#save =  mp_keypoint.SaveJson(SAVE_PATH, FOLDER_NAME,'')
+cap = cv2.VideoCapture(VIDEO_SRC)
+ver = verification.verification()
+sampling = training.ScoreSampling(100)
 
-        # print((sampling.get_samples()))
-        #print(output)
+'''
+keykeypoint.flatvec 이건 추출 벡터값이고
+keypoint.angle 이건 추출되는 각도값임
+순서는 오른손 -> 왼손 -> 몸 - > Z방향 값
+'''
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
     
-        '''
-        아래 주석 제거하면 angle값 그래프 출력
-        '''
-        ver.angle_ver(keypoint.angle)
-        
+    image = keypoint.extract_keypoint(frame)
+    output = keypoint.flatvec
+    #스코어 비교 인스턴스
+    sampling.sampling(keypoint)
 
-        
-        cv2.imshow( 'video', cv2.resize(image,dsize=(960,540)) )
-        
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
+    # print((sampling.get_samples()))
+    #print(output)
+
     '''
-    아래 주석 제거하면 json 경로에 output()저장
-    '''    
-    save.save_data(sampling.get_samples())
+    아래 주석 제거하면 angle값 그래프 출력
+    '''
+    ver.angle_ver(keypoint.angle)
+    
 
-    cap.release()
-    cv2.destroyAllWindows()
+    
+    cv2.imshow( 'video', cv2.resize(image,dsize=(960,540)) )
+    
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
+'''
+아래 주석 제거하면 json 경로에 output()저장
+'''    
+#save.save_data(sampling.get_samples())
 
+cap.release()
+cv2.destroyAllWindows()

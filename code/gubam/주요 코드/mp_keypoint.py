@@ -14,7 +14,7 @@ import math
 import mediapipe as mp
 import json
 import os
-import matplotlib.pyplot as plt
+
 # 0 : 오른손, 1 : 왼손, 2 : 상체
 class keypoint:
     '''
@@ -28,10 +28,8 @@ class keypoint:
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_holistic = mp.solutions.holistic
         self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
-        #sw = True면 칼만필터 적용
         self.kf_sw = kf_sw
-        
-        # 이전값 저장용
+        # 추후 초기값 결정 pre 값은 추출안될때(순수 포인트값)
         self.pointDic = {
             "right" : [[0.1, 0.1, 0.1] for _ in range(21)],
             "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
@@ -41,6 +39,7 @@ class keypoint:
             "left" : [[0.1, 0.1, 0.1] for _ in range(21)],
             "body" : [[0.1, 0.1, 0.1] for _ in range(12)]}
         
+        #sw = True면 칼만필터 적용
         
         self.kf_right = [KalmanFilterXY() for _ in range(21)]
         self.kf_left = [KalmanFilterXY() for _ in range(21)]
@@ -57,26 +56,26 @@ class keypoint:
         self.angle = []
 
     
-    #주요 메서드 
-    #입력으로 프레임 한개 들어옴
+    #주요 메서드
     def extract_keypoint(self, frame):
-        
+
         if self.initial:
             #초기화
             self.frame = frame
             
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             results = self.holistic.process(image)
-            #그리기
+
             self._cv2_drawing_point(results)
 
+            #아래는 다 정리하기
             output = self._vectorization(self.pointDic)
             pre_output = self._vectorization(self.pre_pointDic)
             
             pre_output = self._flatten(pre_output)
             output = self._flatten(output)
             
-            self.score = self.__score(output, pre_output)
+            #self.score = self.__score(output, pre_output)
             self.pre_flatvec = pre_output
             self.flatvec = output
             
@@ -165,7 +164,7 @@ class keypoint:
         temp = []
         if results.pose_landmarks:
             for idx, landmark in enumerate(results.pose_landmarks.landmark[11:23]):
-                
+        
                 if(self.kf_sw):
                     x, y = self.kf_body[idx].update(landmark.x, landmark.y)
                 else:
@@ -192,32 +191,36 @@ class keypoint:
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
                 cv2.circle(self.frame, (x, y), 5, (0, 0, 255), -1)  # 초록색 원
            
-# 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
-    def _vectorization(self, keypoint):
-        output =[]
+    # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
+    def _vectorization(self, keypoint):       
         self.Z_data = []
-        output.append(self._hand_vector(keypoint["right"]))
-        output.append(self._hand_vector(keypoint["left"]))
-        output.append(self._body_vector(keypoint["body"]))
+        output =[]
+        right = []
+        left = []
+        body = []
+        right.append(self._hand_vector(keypoint["right"]))
+        left.append(self._hand_vector(keypoint["left"]))
+        body.append(self._body_vector(keypoint["body"]))
+        print(right)
+        print(left)
+        print(body)
         output.append(self.Z_data)
         return output
         
     # x,y,z 포인트 21개 리스트로 들어옴 21 * 3
     def _hand_vector(self, hand_point):
         output = []
-        Z_output = 0
-
-        for i in range(20):
-            output.append(self._unit_vector( self._vector_XY(hand_point[i], hand_point[i+1])))
+        Z_output = []
+        finger_list = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[0,9],[9,10],[10,11],[11,12],[0,13],[13,14],[14,15],[15,16],[0,17],[17,18],[18,19],[19,20]]
+        for i in range(len(finger_list)):
+            point1_idx = finger_list[i][0]
+            point2_idx = finger_list[i][1]
+            output.append(self._unit_vector( self._vector_XY(hand_point[point1_idx], hand_point[point2_idx])))
 
             if hand_point[i][2] < 0:
-                Z_output-=1
+                Z_output.append(0)
             else:
-                Z_output+=1
-        if Z_output < 0:
-            Z_output = [0 , 0]
-        else:
-            Z_output = [1 , 1]
+                Z_output.append(1)
             
         self.Z_data.append(Z_output)
         
@@ -225,20 +228,18 @@ class keypoint:
     
     def _body_vector(self, body_point):
         output = []
-        Z_output = 0
-        for i in range(11):
-            output.append(self._unit_vector( self._vector_XY(body_point[i], body_point[i+1])))
+        Z_output = []
+        body_list= [[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[4,10],[5,11],[4,8],[5,9]]
+        for i in range(len(body_list)):
+            point1_idx = body_list[i][0]
+            point2_idx = body_list[i][1]
+            output.append(self._unit_vector( self._vector_XY(body_point[point1_idx], body_point[point2_idx])))
             
             if body_point[i][2] < 0:
-                Z_output-=1
+                Z_output.append(0)
             else:
-                Z_output+=1
+                Z_output.append(1)
 
-        if Z_output < 0:
-            Z_output = [0 , 0]
-        else:
-            Z_output = [1 , 1]
-            
         self.Z_data.append(Z_output)
         
         return output          
@@ -249,8 +250,7 @@ class keypoint:
         outputXY[0] = point2[0] - point1[0]
         outputXY[1] = point2[1] - point1[1]   
         return outputXY
-        
-        
+
     #vector input [0] = x, [1] = y
     def _unit_vector(self, vector):
         x, y = vector[0], vector[1]
@@ -277,7 +277,6 @@ class keypoint:
        
 
     def __score(self, point ,pre_point):
-        
         sum = 0
         for i in range(108):
             sum += (point[i] - pre_point[i])
@@ -295,7 +294,7 @@ class keypoint:
             dot = x1 * x2 + y1 * y2
             angle = np.arccos(np.clip(dot, -1.0, 1.0))
             output.append(angle)
-            
+
         self.angle = output
 
     #각도 프레임별 차이 추출
@@ -319,21 +318,23 @@ class SaveJson:
     '''
     경로, 폴더 이름 입력으로 넣기
     '''
-    def __init__(self, SAVE_PATH, FOLDER_NAME,name):
-        self.count = name
+    
+    def __init__(self, SAVE_PATH, FOLDER_NAME, Y_label):
+        self.count = 1
         self.SAVE_PATH = SAVE_PATH
         self.FOLDER_NAME = FOLDER_NAME
+        self.Y_label = Y_label
         self.directory = f"{self.SAVE_PATH}/{self.FOLDER_NAME}"
 
-    def save_data(self, data):
-        filename = f"{self.directory}/{self.count}.json"
+    def save_data(self, data, name):
+        filename = f"{self.directory}/{name}.json"
         
         if not os.path.exists(self.directory):  # 디렉토리가 없으면 생성
             os.mkdir(self.directory)
 
-    
+        jsondata = {"X": data, "Y" : self.Y_label}
         with open(filename, "w", encoding="utf-8") as outfile:
-            json.dump(data, outfile, indent=4, ensure_ascii=False)
+            json.dump(jsondata, outfile, indent=4, ensure_ascii=False)
         self.count += 1
     
         
@@ -342,7 +343,7 @@ class KalmanFilterXY:
     
     def __init__(self):
         self.kf = cv2.KalmanFilter(4, 2)  # 4개 상태 변수(x, y, vx, vy), 2개 측정 변수(x, y)
-        dt = 1  # 시간 간격 (프레임 단위)
+        dt = 30  # 시간 간격 (프레임 단위)
 
         # 상태 전이 행렬 
         self.kf.transitionMatrix = np.array([
