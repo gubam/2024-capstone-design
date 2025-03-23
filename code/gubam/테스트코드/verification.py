@@ -5,6 +5,7 @@ class verification:
     
     def __init__(self):
         self.angles = []
+        self.score_list = []
         plt.ion()  # 인터랙티브 모드 활성화
         self.fig, self.ax = plt.subplots(figsize=(12, 5))
         self.bar_container = None

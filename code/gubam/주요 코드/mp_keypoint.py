@@ -14,8 +14,10 @@ import math
 import mediapipe as mp
 import json
 import os
+import matplotlib.pyplot as plt
 
-# 0 : 오른손, 1 : 왼손, 2 : 상체
+
+
 class keypoint:
     '''
     파라미터각 인스턴스 넣어주기
@@ -24,11 +26,26 @@ class keypoint:
     output -> right: 42, left: 42 body: 24
     '''
 
-    def __init__(self, kf_sw = True):
+    def __init__(self, kf_sw = True, draw_graph_sw = True, z_kill = True):
+        
+        #설정값 스위치
+        self.kf_sw = kf_sw
+        self.draw_graph_sw = draw_graph_sw
+        self.z_kill = z_kill
+        
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_holistic = mp.solutions.holistic
         self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
-        self.kf_sw = kf_sw
+        
+        #그래프 관련
+        if draw_graph_sw ==True:
+            plt.ion()
+            self.fig, self.ax = plt.subplots(1, 3, figsize=(12, 5))
+            self.fig.canvas.manager.set_window_title("hand & body angle data")
+            if z_kill == False:
+                self.fig2, self.ax2 = plt.subplots(figsize=(12, 5))
+
+        
         # 추후 초기값 결정 pre 값은 추출안될때(순수 포인트값)
         self.pointDic = {
             "right" : [[0.1, 0.1, 0.1] for _ in range(21)],
@@ -46,50 +63,84 @@ class keypoint:
         self.kf_body = [KalmanFilterXY() for _ in range(12)]
         
         self.initial = True
-        
         self.Z_data = []
+        self.hand_index = None
+
 
         ###주로 사용###
+        self.score_list = []
         self.score = 0        
         self.pre_flatvec = []
         self.flatvec = []
         self.angle = []
+        self.pre_angle = []
 
     
     #주요 메서드
     def extract_keypoint(self, frame):
-
-        if self.initial:
-            #초기화
-            self.frame = frame
-            
-            image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = self.holistic.process(image)
-
-            self._cv2_drawing_point(results)
-
-            #아래는 다 정리하기
-            output = self._vectorization(self.pointDic)
-            pre_output = self._vectorization(self.pre_pointDic)
-            
-            pre_output = self._flatten(pre_output)
-            output = self._flatten(output)
-            
-            #self.score = self.__score(output, pre_output)
-            self.pre_flatvec = pre_output
-            self.flatvec = output
-            
-            self.__angle()
-            return frame
+        self.frame = frame
+        #좌표추출
+        self._cv2_drawing_point(frame)
+        #벡터로 변환 angle 업데이트
+        self._vectorization(self.pointDic)
         
-        else:
-            self.__initialization()
-
+        if self.draw_graph_sw == True:
+            self.__draw_graph()
         
+        return
+
+    def __draw_graph(self):
+        self.ax[0].clear()
+        self.ax[1].clear()
+        self.ax[2].clear()
+        
+        
+        x1 = np.arange(20)
+        x2 = np.arange(20, 40)
+        x3 = np.arange(40, 50)  # 여기도 20~40으로 설정 (기존 코드 유지)
+        
+        right_hand = self.angle[:20]
+        left_hand = self.angle[20:40]
+        body = self.angle[40:50]
+        
+        #z값 관련
+        if not self.z_kill:
+            x4 = np.arange(51, 102)
+            self.ax2.clear()
+            z_data = self.angle[50:]
+            self.ax2.bar(x4, z_data)
+            self.ax2.set_ylim(0, 1)
+            self.ax2.set_title("z data")
+        
+        # 그래프 업데이트
+        self.ax[0].bar(x1, right_hand)
+        self.ax[1].bar(x2, left_hand)
+        self.ax[2].bar(x3, body) 
+        
+        self.ax[0].set_ylim(0, 3.2)
+        self.ax[1].set_ylim(0, 3.2)
+        self.ax[2].set_ylim(0, 3.2)
+        
+        # 제목 및 범례 추가
+        self.ax[0].set_title("right hand")
+        self.ax[1].set_title("left hand")
+        self.ax[2].set_title("body")
+        
+        plt.tight_layout()
+        plt.show()
+        plt.pause(0.01)
+        return
+
+
+    def __initialization(self):
+        self.intial = True
+       
 
     # 그리기 파트(cv2 이용), point값 추출            
     def _cv2_drawing_point(self, results): 
             # 각 관절 좌표 그리기 (오른손, 왼손, 상체)
+        image = cv2.cvtColor(results, cv2.COLOR_BGR2RGB)
+        results = self.holistic.process(image)
         
         # 오른손 랜드마크 그리기
         temp = []
@@ -191,8 +242,10 @@ class keypoint:
                 y = int(y * self.frame.shape[0])  # 이미지 높이로 변환
                 cv2.circle(self.frame, (x, y), 5, (0, 0, 255), -1)  # 초록색 원
            
-    # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환
-    def _vectorization(self, keypoint):       
+    # 추출한 포인트들 벡터화 및 크기 1로 변환, depth 데이터 변환 최종적으로는 클래스 변수값 저장 + 스코어까지 내기
+    def _vectorization(self, keypoint):
+        self.pre_angle = self.angle  
+        self.pre_flatvec = self.flatvec     
         self.Z_data = []
         output =[]
         right = []
@@ -201,11 +254,22 @@ class keypoint:
         right.append(self._hand_vector(keypoint["right"]))
         left.append(self._hand_vector(keypoint["left"]))
         body.append(self._body_vector(keypoint["body"]))
-        print(right)
-        print(left)
-        print(body)
-        output.append(self.Z_data)
-        return output
+        right = right[0]
+        left = left[0]
+        body = body[0]
+        
+        output = (self.__angle(right, left, body))
+        
+        if not self.z_kill:
+            output.extend(self.Z_data[0])
+            output.extend(self.Z_data[1])
+            output.extend(self.Z_data[2])
+
+        self.angle = output        
+        self.__score()
+        self.score_list.append(self.score)
+
+        return
         
     # x,y,z 포인트 21개 리스트로 들어옴 21 * 3
     def _hand_vector(self, hand_point):
@@ -241,7 +305,6 @@ class keypoint:
                 Z_output.append(1)
 
         self.Z_data.append(Z_output)
-        
         return output          
         
     #두개의 포인트 입력하면 두 점의 XY 벡터 추출
@@ -262,81 +325,45 @@ class keypoint:
         output = [unit_x, unit_y]
         return output
     
-    def _flatten(self, list):
-        output = []
-        for list in enumerate(list):
-            temp = list[1]
-            for temp in enumerate(temp):
-                temp = temp[1]
-                output.append(temp[0])
-                output.append(temp[1])
-        return output
-    
-    def __initialization(self):
-        self.intial = True
-       
 
-    def __score(self, point ,pre_point):
+
+    def __score(self):
         sum = 0
-        for i in range(108):
-            sum += (point[i] - pre_point[i])
-        sum = abs(sum)
-        float(f"{(sum):.7f}")
-        return sum
+        if not self.pre_angle:
+            return 
+        for i in range(len(self.angle)):
+            sum += abs(self.angle[i] - self.pre_angle[i])
+        self.score = float(f"{(sum):.7f}")
+        return
     
     #현재 프레임의 각도 추출
-    def __angle(self):
-        vec = self.flatvec
+    def __angle(self, right, left, body):
+        std = body[0]
+        right_ag = []
+        left_ag = []
+        body_ag =[]
         output = []
-        for i in range(0, 106, 2):
-            x1, x2 = vec[i], vec[i+2]
-            y1, y2 = vec[i+1], vec[i+3]
-            dot = x1 * x2 + y1 * y2
-            angle = np.arccos(np.clip(dot, -1.0, 1.0))
-            output.append(angle)
+        self.flatvec.append(right)
+        self.flatvec.extend(left)
+        self.flatvec.extend(body)
+        for i in range(len(right)):
+            dot = std[0] * right[i][0] + std[1] * right[i][1]
+            right_ag.append( float(f"{(np.arccos(np.clip(dot, -1.0, 1.0))):.7f}" ))
+        for i in range(len(left)):
+            dot = std[0] * left[i][0] + std[1] * left[i][1]
+            left_ag.append(float(f"{(np.arccos(np.clip(dot, -1.0, 1.0))):.7f}" ))
+        for i in range(1,len(body)):
+            dot = std[0] * body[i][0] + std[1] * body[i][1]
+            body_ag.append(float(f"{(np.arccos(np.clip(dot, -1.0, 1.0))):.7f}" )) 
+        output.append(right_ag)
+        output = output[0]
+        output.extend(left_ag)
+        output.extend(body_ag) 
+        return output
 
-        self.angle = output
-
-    #각도 프레임별 차이 추출
-    def __anglediff(self):
-        vec = self.flatvec
-        prevec = self.pre_flatvec
-
-        output = []
-        for i in range(0, 108, 2):
-            x1, x2 = prevec[i], vec[i]
-            y1, y2 = prevec[i+1], vec[i+1]
-            dot = x1 * x2 + y1 * y2
-            
-            angle = np.arccos(np.clip(dot, -1.0, 1.0))
-            
-            output.append(angle)
-        self.angle = output
             
         
-class SaveJson:
-    '''
-    경로, 폴더 이름 입력으로 넣기
-    '''
-    
-    def __init__(self, SAVE_PATH, FOLDER_NAME, Y_label):
-        self.count = 1
-        self.SAVE_PATH = SAVE_PATH
-        self.FOLDER_NAME = FOLDER_NAME
-        self.Y_label = Y_label
-        self.directory = f"{self.SAVE_PATH}/{self.FOLDER_NAME}"
 
-    def save_data(self, data, name):
-        filename = f"{self.directory}/{name}.json"
-        
-        if not os.path.exists(self.directory):  # 디렉토리가 없으면 생성
-            os.mkdir(self.directory)
-
-        jsondata = {"X": data, "Y" : self.Y_label}
-        with open(filename, "w", encoding="utf-8") as outfile:
-            json.dump(jsondata, outfile, indent=4, ensure_ascii=False)
-        self.count += 1
-    
         
 #GPT가 작성 잘모름
 class KalmanFilterXY:
