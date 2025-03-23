@@ -12,8 +12,6 @@ import cv2
 import numpy as np
 import math
 import mediapipe as mp
-import json
-import os
 import matplotlib.pyplot as plt
 
 
@@ -63,12 +61,14 @@ class keypoint:
         self.kf_body = [KalmanFilterXY() for _ in range(12)]
         
         self.initial = True
-        self.Z_data = []
+        self.Z_data = [] 
         self.hand_index = None
 
 
         ###주로 사용###
         self.score_list = []
+        self.angle_list = []
+        self.frame_list = []
         self.score = 0        
         self.pre_flatvec = []
         self.flatvec = []
@@ -88,6 +88,7 @@ class keypoint:
             self.__draw_graph()
         
         return
+
 
     def __draw_graph(self):
         self.ax[0].clear()
@@ -267,7 +268,10 @@ class keypoint:
 
         self.angle = output        
         self.__score()
-        self.score_list.append(self.score)
+        if self.score:
+            self.score_list.append(self.score)
+            self.angle_list.append(self.angle)
+            self.frame_list.append(self.frame)
 
         return
         

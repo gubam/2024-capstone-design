@@ -1,12 +1,12 @@
 import cv2
 import mp_keypoint
-import training
+#import training
 '''
 VIDEO_SRC = 영상 경로
 SAVE_PATH = json 저장 경로
 FOLDER_NAME = json 저장 폴더(폴더 안에0,1,2,3...이름의 json이 생성됨)
 '''
-VIDEO_SRC = "C:/Users/gubam/Desktop/수어 데이터셋/원본영상/간호사_WORD0187/NIA_SL_WORD0187_REAL02_F.mp4"
+VIDEO_SRC = "C:/Users/82109/Desktop/데이터셋/수어영상 데이터셋/나_WORD1157/NIA_SL_WORD1157_REAL02_F.mp4"
 SAVE_PATH = "C:/Users/gubam/Desktop/json"
 FOLDER_NAME = "오른쪽"
 
@@ -21,7 +21,8 @@ while cap.isOpened():
         break
     keypoint.extract_keypoint(frame)
     image = keypoint.frame
-    output = keypoint.flatvec
+    output = keypoint.angle
+    print(len(keypoint.angle_list))
     #sampling.sampling(keypoint)
     
     cv2.imshow( 'video', cv2.resize(image,dsize=(960,540)) )
