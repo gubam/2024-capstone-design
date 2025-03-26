@@ -14,8 +14,6 @@ import math
 import mediapipe as mp
 import matplotlib.pyplot as plt
 
-
-
 class keypoint:
     '''
     파라미터각 인스턴스 넣어주기
@@ -33,7 +31,7 @@ class keypoint:
         
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_holistic = mp.solutions.holistic
-        self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+        self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.9, min_tracking_confidence=0.9)
         
         #그래프 관련
         if draw_graph_sw ==True:
@@ -266,7 +264,7 @@ class keypoint:
             output.extend(self.Z_data[1])
             output.extend(self.Z_data[2])
 
-        self.angle = output        
+        self.angle = output
         self.__score()
         if self.score:
             self.score_list.append(self.score)
