@@ -3,7 +3,7 @@
 그냥 스코어기준 샘플링
 '''
 class ScoreSampling:
-    def __init__(self, sampling_len, skip_sample=10):
+    def __init__(self, sampling_len, skip_sample = 10):
         self.sampling_len = sampling_len  # 최대 저장 개수
         self.skip_sample = skip_sample  # 처음 무시할 개수
         self.loop_counter = 0
