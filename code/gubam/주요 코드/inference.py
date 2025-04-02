@@ -2,7 +2,20 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import mp_keypoint
-#
+
+label_map = {
+    0: "cure",
+    1: "head",
+    2: "left",
+    3: "me",
+    4: "nurse",
+    5: "right",
+    6: "sick",
+    7: "you"
+}
+
+
+
 class LSTMModel(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, num_classes):
         super(LSTMModel, self).__init__()
@@ -17,14 +30,14 @@ class LSTMModel(nn.Module):
 input_size = 50  # 특징 개수 (예제에서 keypoints의 개수)
 hidden_size = 50  # LSTM의 hidden 크기
 num_layers = 2  # ✅ LSTM 층 개수 (2층 LSTM)
-num_classes = 5  # 출력 클래스 개수 (cure, head, me, right, sick)
+num_classes = 8  # 출력 클래스 개수 (cure, head, me, right, sick)
 
 # ✅ 모델 생성
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = LSTMModel(input_size, hidden_size, num_layers, num_classes).to(device)
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = LSTMModel(input_size, hidden_size, num_layers, num_classes)
  
 # ✅ 저장된 모델 불러오기
-model.load_state_dict(torch.load("C:/Users/82109/Desktop/2024-capstone-design/code/gubam/pt_file/model.pt"))
+model.load_state_dict(torch.load("C:/Users/82109/Desktop/2024-capstone-design/code/gubam/pt_file/model_8class.pt",map_location=torch.device('cpu')))
 
 
 # ✅ 모델을 평가 모드로 설정
@@ -74,4 +87,10 @@ cv2.destroyAllWindows()
 
 input = torch.tensor(angle_list)
 print(input.shape)
+output = model(input.unsqueeze(0))
 print(model(input.unsqueeze(0)))
+
+max_index = torch.argmax(output)
+matched_label = label_map[int(max_index)]
+
+print(matched_label) 
