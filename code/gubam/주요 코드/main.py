@@ -3,7 +3,8 @@ import mp_keypoint
 import training
 import json
 import os
-label = "sick"
+
+label = "you"
 folder_path = f"C:/Users/gubam/Desktop/sdata/{label}"
 file_list = os.listdir(folder_path)
 print(file_list)
