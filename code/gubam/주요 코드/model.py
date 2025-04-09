@@ -2,14 +2,14 @@ import torch
 import torch.nn as nn
 
 label_map = {
-    0: "cure",
-    1: "head",
-    2: "left",
-    3: "me",
-    4: "nurse",
-    5: "right",
-    6: "sick",
-    7: "you"
+    0: "치료하다",
+    1: "머리",
+    2: "왼쪽",
+    3: "나",
+    4: "간호사",
+    5: "오른쪽",
+    6: "아프다",
+    7: "너"
 }
 
 #메인에서 해당클래스 객체 선언 예정

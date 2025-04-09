@@ -24,17 +24,17 @@ class ScoreSampling:
         else:
             return frame_list, angle_list
 
-#100개 중 50개 샘플링            
-class VideoWindow:
-    def __init__(self, input_frame, sampling_frame = 100, stride = 10):
-        self.input_frame = input_frame
-        self.sampling_frame = sampling_frame
-        self.stride = stride
-        self.video_len = len(input_frame)
-        self.pre_idx = 0
+# #100개 중 50개 샘플링            
+# class VideoWindow:
+#     def __init__(self, input_frame, sampling_frame = 100, stride = 10):
+#         self.input_frame = input_frame
+#         self.sampling_frame = sampling_frame
+#         self.stride = stride
+#         self.video_len = len(input_frame)
+#         self.pre_idx = 0
         
-    def VideoSampling(self):
-        pass
+#     def VideoSampling(self):
+#         pass
 
             
 

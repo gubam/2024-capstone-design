@@ -3,13 +3,14 @@ import mp_keypoint
 import training
 import cv2
 import math
+import gpt_api
 
-VIDEO_SRC = "C:/Users/82109/Downloads/KakaoTalk_20250404_164447723.mp4"
+VIDEO_SRC = "C:/Users/82109/Desktop/test1/sen/실패.mp4"
 
 #인스턴스 선언 부분
 keypoint = mp_keypoint.keypoint(kf_sw = True, draw_graph_sw = False, z_kill = True)
 cap = cv2.VideoCapture(VIDEO_SRC)
-sampling = training.ScoreSampling(50)
+sampling = training.ScoreSampling(50,skip_sample=0)
 model = ModelLoader('lstm')
 
 #최대 길이 제한용
@@ -32,8 +33,8 @@ frame = keypoint.frame_list
 angle = keypoint.angle_list
 
 length = len(score)  # score_list의 길이 기준으로 자름
-chunk_size = 100
-num_chunks = math.ceil((length % chunk_size) / 10)
+chunk_size = 70
+num_chunks = math.ceil(length / 10)
 
 print(length)
 print(num_chunks)
@@ -48,16 +49,20 @@ for i in range(num_chunks):
     frame_list, angle_list = sampling.sampling(score_chunk, frame_chunk, angle_chunk)
     angle_temp.append(angle_list)
 
-    for f in frame_list:
-        cv2.imshow("Sampling Video", cv2.resize(f, dsize=(960, 540)))
-        if cv2.waitKey(int(1000 / 30)) & 0xFF == ord('q'):
-            break
+    # for f in frame_list:
+    #     cv2.imshow("Sampling Video", cv2.resize(f, dsize=(960, 540)))
+    #     if cv2.waitKey(int(1000 / 30)) & 0xFF == ord('q'):
+    #         break
 
     idx += 10
 
 cap.release()
 cv2.destroyAllWindows()
-
+temp =[]
 for i in range(len(angle_temp)):
     output = model.inference_output(angle_temp[i])
+    temp.append(output)
     print(output)
+
+gpt_out = gpt_api.generate_sentence_with_gpt(temp)
+print(gpt_out)
