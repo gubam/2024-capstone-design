@@ -31,7 +31,7 @@ class ModelLoader:
 
         print(output)
         #인덱스로 결과값 찾기
-        if torch.max(output) < 4:
+        if torch.max(output) < 2:
             return 'None' 
         max_index = torch.argmax(output)
 

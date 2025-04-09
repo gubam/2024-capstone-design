@@ -4,7 +4,7 @@ import training
 import cv2
 import math
 
-VIDEO_SRC = "C:/Users/82109/Downloads/KakaoTalk_20250312_141834806.mp4"
+VIDEO_SRC = "C:/Users/82109/Downloads/KakaoTalk_20250404_164447723.mp4"
 
 #인스턴스 선언 부분
 keypoint = mp_keypoint.keypoint(kf_sw = True, draw_graph_sw = False, z_kill = True)
@@ -33,8 +33,10 @@ angle = keypoint.angle_list
 
 length = len(score)  # score_list의 길이 기준으로 자름
 chunk_size = 100
-num_chunks = math.ceil(length / chunk_size)  # 나눠 떨어지지 않으면 마지막 덩어리도 포함
+num_chunks = math.ceil((length % chunk_size) / 10)
+
 print(length)
+print(num_chunks)
 
 idx = 0
 angle_temp =[]
@@ -51,7 +53,7 @@ for i in range(num_chunks):
         if cv2.waitKey(int(1000 / 30)) & 0xFF == ord('q'):
             break
 
-    idx += chunk_size
+    idx += 10
 
 cap.release()
 cv2.destroyAllWindows()
