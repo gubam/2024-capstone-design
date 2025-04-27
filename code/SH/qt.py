@@ -2,8 +2,8 @@ import sys
 sys.coinit_flags = 2  # STA 모드 강제 설정 (추가)
 
 # 기존 import 밑에 추가
-from predict import predict
-from predict_bilstm import predict
+# from predict import predict
+# from predict_bilstm import predict
 
 
 import os
@@ -27,8 +27,8 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)  # Deprecated 경
 
 
 # 경로 설정
-AUDIO_SAVE_PATH = r"C:/Users/SAMSUNG/OneDrive/바탕 화면/Coding/캡스톤/project/recoding"
-VIDEO_SAVE_PATH = r"C:/Users/SAMSUNG/OneDrive/바탕 화면/Coding/캡스톤/project/video"
+AUDIO_SAVE_PATH = r"C:/Users/82109/Desktop/2024-capstone-design/temp_data"
+VIDEO_SAVE_PATH = r"C:/Users/82109/Desktop/2024-capstone-design/temp_data"
 
 os.makedirs(AUDIO_SAVE_PATH, exist_ok=True)
 os.makedirs(VIDEO_SAVE_PATH, exist_ok=True)
@@ -272,7 +272,7 @@ class SignLanguageApp(QMainWindow):
                 self.timer_timer.stop()
 
                 # ✅ 녹화된 영상으로 바로 예측
-                result = predict(self.video_filename)
+                # result = predict(self.video_filename)
                 print("예측된 단어:", result)
 
                 # ✅ 오른쪽 사각형에 결과 출력

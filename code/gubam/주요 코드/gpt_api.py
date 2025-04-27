@@ -1,7 +1,7 @@
 from openai import OpenAI
 
 # ✅ OpenAI API 키 설정
-client = OpenAI(api_key="api")
+client = OpenAI(api_key="")
 
 # ✅ GPT에게 문장 생성 요청
 def generate_sentence_with_gpt(words):
@@ -21,3 +21,9 @@ def generate_sentence_with_gpt(words):
         max_tokens=50
     )
     return response.choices[0].message.content.strip()
+
+from gtts import gTTS
+
+def tts_output(text):
+    tts = gTTS(text=text, lang='ko')
+    tts.save("output3.mp3")
