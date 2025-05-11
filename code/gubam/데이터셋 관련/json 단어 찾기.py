@@ -9,7 +9,7 @@ import os
 import json
 
 # 검색할 단어 설정
-target_word = "진단"
+target_word = "네"
 
 # JSON 파일이 저장된 디렉토리 경로
 directory = "C:/Users/82109/Desktop/sen/01"

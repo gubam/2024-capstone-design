@@ -2,26 +2,25 @@ import torch
 import torch.nn as nn
 
 label_map = {
-    0: "치료하다",
-    1: "머리",
-    2: "왼쪽",
-    3: "나",
-    4: "간호사",
-    5: "오른쪽",
-    6: "아프다",
-    7: "너"
+    0: "ambulance", 1: "cold", 2: "come", 3: "constipation", 4: "counsel",
+    5: "cure", 6: "diarrhea", 7: "discharge", 8: "doctor", 9: "examine",
+    10: "fracture", 11: "hand", 12: "head", 13: "health", 14: "hospitalization",
+    15: "left", 16: "me", 17: "neck", 18: "nurse", 19: "patient",
+    20: "recover", 21: "right", 22: "runnynose", 23: "sick", 24: "standby",
+    25: "start", 26: "temperature", 27: "weight", 28: "wound", 29: "you"
 }
+
 
 #메인에서 해당클래스 객체 선언 예정
 class ModelLoader:
-    def __init__(self, model_name ,input_size = 50, hidden_size = 50, num_layers = 2 , num_classes = 8 ):
+    def __init__(self, model_name ,input_size = 50, hidden_size = 50, num_layers = 2 , num_classes = 30 ):
         self.input_size = input_size
         self.hidden_size =hidden_size  
         self.num_layers =  num_layers 
         self.num_classes = num_classes
         self.model =  self._create_model(model_name)
         #파라미터 로드
-        self.model.load_state_dict(torch.load("C:/Users/82109/Desktop/2024-capstone-design/code/gubam/pt_file/model_8class.pt",map_location=torch.device('cpu')))
+        self.model.load_state_dict(torch.load("C:/Users/gubam/Documents/GitHub/2024-capstone-design/code/gubam/pt_file/30class.pt",map_location=torch.device('cpu')))
         self.model.eval()
         print("모델이 성공적으로 불러와졌습니다!")
 

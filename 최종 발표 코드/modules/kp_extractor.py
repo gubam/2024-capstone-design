@@ -35,11 +35,8 @@ class keypoint:
         self.draw_graph_sw = draw_graph_sw
         self.z_kill = z_kill
         
-        # self.mp_drawing = mp.solutions.drawing_utils
         self.mp_holistic = mp_holistic
         self.holistic = holistic
-        # self.mp_holistic = mp.solutions.holistic
-        # self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.9, min_tracking_confidence=0.9)
         
         self.mp_holistic = mp_holistic
         self.holistic = holistic

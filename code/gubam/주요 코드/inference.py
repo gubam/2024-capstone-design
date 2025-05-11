@@ -3,9 +3,9 @@ import mp_keypoint
 import training
 import cv2
 import math
-import gpt_api
+# import gpt_api
 
-VIDEO_SRC = "C:/Users/82109/Desktop/test1/sen/나아프다.mp4"
+VIDEO_SRC = "C:/Users/gubam/Desktop/new_video/constipation/constipation0.mp4"
 
 #인스턴스 선언 부분
 keypoint = mp_keypoint.keypoint(kf_sw = True, draw_graph_sw = False, z_kill = True)
@@ -30,7 +30,7 @@ frame = keypoint.frame_list
 angle = keypoint.angle_list
 
 length = len(score)  # score_list의 길이 기준으로 자름
-sample_size = 100
+sample_size = 90
 num_sample = math.ceil((length-100) / 10 )
 
 print(length)
@@ -38,7 +38,7 @@ print(num_sample)
 
 idx = 0
 angle_temp =[]
-for i in range(num_sample):
+for i in range(2):
     score_chunk = score[idx:idx+sample_size]
     frame_chunk = frame[idx:idx+sample_size]
     angle_chunk = angle[idx:idx+sample_size]
@@ -46,7 +46,7 @@ for i in range(num_sample):
     frame_list, angle_list = sampling.sampling(score_chunk, frame_chunk, angle_chunk)
     angle_temp.append(angle_list)
 
-    # 샘플링영상 켜기
+    # # 샘플링영상 켜기
     # for f in frame_list:
     #     cv2.imshow("Sampling Video", cv2.resize(f, dsize=(960, 540)))
     #     if cv2.waitKey(int(1000 / 30)) & 0xFF == ord('q'):
@@ -62,7 +62,7 @@ for i in range(len(angle_temp)):
     temp.append(output)
     print(output)
 
-gpt_out = gpt_api.generate_sentence_with_gpt(temp)
-print(gpt_out)
+# gpt_out = gpt_api.generate_sentence_with_gpt(temp)
+# print(gpt_out)
 
-gpt_api.tts_output(gpt_out)
+# gpt_api.tts_output(gpt_out)

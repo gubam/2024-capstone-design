@@ -22,17 +22,28 @@ class keypoint:
     output -> right: 42, left: 42 body: 24
     '''
 
-    def __init__(self, kf_sw = True, draw_graph_sw = True, z_kill = True):
+    def __init__(self, 
+                 holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.9, min_tracking_confidence=0.9), 
+                 mp_holistic = mp.solutions.holistic,  
+                 kf_sw = True, 
+                 draw_graph_sw = True, 
+                 z_kill = True
+                 ):
         
         #설정값 스위치
         self.kf_sw = kf_sw
         self.draw_graph_sw = draw_graph_sw
         self.z_kill = z_kill
         
-        self.mp_drawing = mp.solutions.drawing_utils
-        self.mp_holistic = mp.solutions.holistic
-        self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.9, min_tracking_confidence=0.9)
+        # self.mp_drawing = mp.solutions.drawing_utils
+        self.mp_holistic = mp_holistic
+        self.holistic = holistic
+        # self.mp_holistic = mp.solutions.holistic
+        # self.holistic = mp.solutions.holistic.Holistic(min_detection_confidence=0.9, min_tracking_confidence=0.9)
         
+        self.mp_holistic = mp_holistic
+        self.holistic = holistic
+               
         #그래프 관련
         if draw_graph_sw ==True:
             plt.ion()
@@ -256,7 +267,10 @@ class keypoint:
         right = right[0]
         left = left[0]
         body = body[0]
-        
+        right.extend(self._hand_vector_2(keypoint["right"],shoulder_point=keypoint["body"][1]))
+        left.extend(self._hand_vector_2(keypoint["left"], shoulder_point=keypoint["body"][0]))
+        body.extend(self._body_vector_2(keypoint["body"]))
+                
         output = (self.__angle(right, left, body))
         
         if not self.z_kill:
@@ -308,7 +322,42 @@ class keypoint:
 
         self.Z_data.append(Z_output)
         return output          
+
+    # 어깨 기준 벡터 생성
+    def _hand_vector_2(self, hand_point,shoulder_point):
+        output = []
+        Z_output = []
+        finger_list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        for i in range(len(finger_list)):
+            point2_idx = finger_list[i]
+            output.append(self._unit_vector( self._vector_XY(shoulder_point, hand_point[point2_idx])))
+
+            if hand_point[i][2] < 0:
+                Z_output.append(0)
+            else:
+                Z_output.append(1)
+            
+        self.Z_data.append(Z_output)
         
+        return output
+    
+    def _body_vector_2(self, body_point):
+        output = []
+        Z_output = []
+        body_list= [[0,2],[1,3],[0,4],[1,5],[0,6],[1,7],[0,8],[1,9],[0,10],[1,11]]
+        for i in range(len(body_list)):
+            point1_idx = body_list[i][0]
+            point2_idx = body_list[i][1]
+            output.append(self._unit_vector( self._vector_XY(body_point[point1_idx], body_point[point2_idx])))
+            
+            if body_point[i][2] < 0:
+                Z_output.append(0)
+            else:
+                Z_output.append(1)
+
+        self.Z_data.append(Z_output)
+        return output   
+            
     #두개의 포인트 입력하면 두 점의 XY 벡터 추출
     def _vector_XY(self, point1, point2):
         outputXY = [0, 0]
@@ -363,10 +412,6 @@ class keypoint:
         output.extend(body_ag) 
         return output
 
-            
-        
-
-        
 #GPT가 작성 잘모름
 class KalmanFilterXY:
     
