@@ -4,7 +4,7 @@ sys.coinit_flags = 2  # STA 모드 강제 설정 (추가)
 # 기존 import 밑에 추가
 from predict import predict
 from predict_bilstm import predict
-
+from modules.inference import run_sign_inference
 
 import os
 import cv2
@@ -272,7 +272,7 @@ class SignLanguageApp(QMainWindow):
                 self.timer_timer.stop()
 
                 # ✅ 녹화된 영상으로 바로 예측
-                result = predict(self.video_filename)
+                result = run_sign_inference(self.video_filename)
                 print("예측된 단어:", result)
 
                 # ✅ 오른쪽 사각형에 결과 출력
