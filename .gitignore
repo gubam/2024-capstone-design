@@ -1,2 +1,4 @@
 *.pyc
-qtenv/
+CDenv/
+.pyc
+*__pychche__

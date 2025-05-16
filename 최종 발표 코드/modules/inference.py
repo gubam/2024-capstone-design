@@ -1,12 +1,15 @@
 # modules/infer_video.py
 import torch
 import cv2
+import os
 from .predictor import SignLanguagePredictor
 from .kp_extractor import keypoint # your own module
 
-MODEL_PATH = "C:/Users/gubam/Documents/GitHub/2024-capstone-design/최종 발표 코드/pt_file/10_words.pt"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "file", "10_words.pt")
 
 def run_sign_inference(video_path):
+    output = []
     keypoint_inst = keypoint(kf_sw=True, draw_graph_sw=False, z_kill=True)
     cap = cv2.VideoCapture(video_path)
 
@@ -25,8 +28,11 @@ def run_sign_inference(video_path):
 
     predictor = SignLanguagePredictor(MODEL_PATH)
     results = predictor.predict_with_stride(
-        angle_tensor, window_size=100, stride=10, min_confidence=0.5
+        angle_tensor, window_size=100, stride=10, min_confidence=0.8
     )
 
     for start, end, label, conf in results:
         print(f"🟦 {start}-{end} 프레임: {label} ({conf*100:.1f}%)")
+        output.append(label)
+
+    return output

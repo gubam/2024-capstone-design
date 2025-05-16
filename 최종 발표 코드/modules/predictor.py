@@ -7,9 +7,9 @@ import torch.nn.functional as F
 from .model import LSTMModel
 
 label_map = {
-    0: "cure", 1: "head", 2: "left", 3: "me",
-    4: "nurse", 5: "right", 6: "sick", 7: "you",
-    8: "hand", 9: "health"
+    0: "치료하다", 1: "머리", 2: "왼쪽", 3: "나",
+    4: "간호사", 5: "오른쪽", 6: "아프다", 7: "너",
+    8: "손ㅋ", 9: "건강하다"
 }
 
 class SignLanguagePredictor:
