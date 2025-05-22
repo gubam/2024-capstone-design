@@ -12,20 +12,65 @@ from modules.sign2audio import audio_to_sign, sign_to_audio
 import sounddevice as sd
 from scipy.io.wavfile import write as write_wav
 from modules.motion_generation import render_multiple_folders
+from PyQt6.QtGui import QFont
+import pygame
+
+class StreamRedirect:
+    def __init__(self, text_widget):
+        self.text_widget = text_widget
+
+    def write(self, msg):
+        msg = msg.strip()
+        if msg:
+            self.text_widget.append(msg)
+
+    def flush(self):
+        pass
+def play_mp3():
+    pygame.mixer.init()
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    MODEL_PATH = os.path.join(BASE_DIR,"file", "tts_output.mp3")
+    pygame.mixer.music.load(MODEL_PATH)
+    pygame.mixer.music.play()
+    print("🔊 MP3 재생 중...")
+
+    # 재생이 끝날 때까지 기다림
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)
 
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("웹캠 녹화기")
-        self.resize(800, 400)
+        self.setWindowTitle("그로밋의 수어 번역기")
+        self.resize(900, 500)
 
         # 버튼 및 메시지 박스
+        font = QFont()
+        font.setPointSize(16)
+        fonts = QFont()
+        fonts.setPointSize(10)     
         self.record_button = QPushButton("웹캠 녹화 시작")
         self.audio_button = QPushButton("녹음")  # UI용
+        self.record_button.setFont(font)
+        self.audio_button.setFont(font)
+
+        self.log_box = QTextEdit()
+        self.log_box.setPlaceholderText("터미널 출력 로그")
+        self.log_box.setReadOnly(True)
+        self.log_box.setFont(fonts)
+
         self.message_box = QTextEdit()
+        self.message_box.setFont(fonts)
         self.message_box.setPlaceholderText("메시지 박스")
+
         self.is_recording_audio = False
         self.audio_thread = None
+        self.record_button.setFixedHeight(100)
+        self.audio_button.setFixedHeight(100)
+        
+        bottom_layout = QHBoxLayout()
+        bottom_layout.addWidget(self.message_box,stretch=2)
+        bottom_layout.addWidget(self.log_box,stretch=1)
 
         # 레이아웃
         h_layout = QHBoxLayout()
@@ -34,7 +79,8 @@ class MainWindow(QWidget):
 
         v_layout = QVBoxLayout()
         v_layout.addLayout(h_layout)
-        v_layout.addWidget(self.message_box)
+        v_layout.addLayout(h_layout)
+        v_layout.addLayout(bottom_layout)  
         self.setLayout(v_layout)
 
         # 상태 변수
@@ -44,6 +90,8 @@ class MainWindow(QWidget):
         # 버튼 이벤트
         self.record_button.clicked.connect(self.toggle_recording)
         self.audio_button.clicked.connect(self.toggle_audio_recording)
+        sys.stdout = StreamRedirect(self.log_box)
+        sys.stderr = StreamRedirect(self.log_box)
 
 
     def record_video(self):
@@ -52,7 +100,7 @@ class MainWindow(QWidget):
             cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
             cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
             cap.set(cv2.CAP_PROP_FPS, 60)
-
+            self.message_box.clear()
             if not cap.isOpened():
                 self.message_box.append("웹캠을 열 수 없습니다.")
                 return
@@ -125,8 +173,13 @@ class MainWindow(QWidget):
             self.message_box.append("●영상 분석중●")
 
             out = sign_to_audio(file_path)
+
             self.message_box.append(f"문장 출력 : {out}")
+            play_mp3()
+            self.message_box.append(f"음성 출력중")
+            self.message_box.append(f"완료")
             self.message_box.append("---------")
+
 
 
 
@@ -164,20 +217,32 @@ class MainWindow(QWidget):
 
     def record_audio(self):
         try:
-            duration = 300  # 녹음 최대 시간(초) (필요시 제한 제거 가능)
-            sample_rate = 44100
-            channels = 1  # mono
-            print("🔴 녹음 중... Ctrl+C로 강제 중단 가능")
+            self.message_box.clear()
 
-            # 녹음 시작
-            audio = sd.rec(int(duration * sample_rate), samplerate=sample_rate,
+            sample_rate = 44100
+            channels = 1
+            print("🔴 녹음 중... 정지 버튼을 누르세요.")
+
+            max_duration = 300  # 최대 녹음 길이 (예비용)
+            start_time = time.time()
+
+            # 🔴 녹음 시작
+            audio = sd.rec(int(max_duration * sample_rate), samplerate=sample_rate,
                         channels=channels, dtype='int16')
+
             while self.is_recording_audio:
                 sd.sleep(100)
 
-            # 녹음 중지
+            # ⏹️ 정지 시점
             sd.stop()
-            print("🟢 녹음 완료")
+            end_time = time.time()
+            actual_duration = end_time - start_time
+            actual_samples = int(actual_duration * sample_rate)
+
+            print(f"🟢 녹음 완료 - 실제 길이: {actual_duration:.2f}초")
+
+            # 🔄 슬라이싱: 실제 녹음된 부분만 저장
+            trimmed_audio = audio[:actual_samples]
 
             # 저장 경로
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -185,12 +250,13 @@ class MainWindow(QWidget):
 
             if os.path.exists(audio_path):
                 os.remove(audio_path)
-            write_wav(audio_path, sample_rate, audio)
-            self.message_box.append(f"🎧 오디오 저장 완료: {audio_path}")
+            write_wav(audio_path, sample_rate, trimmed_audio)
+
+            self.message_box.append("🎧 오디오 저장 완료")
             gloss = audio_to_sign()
             print(gloss)
 
-            ##영상 재생하기
+            # 🎬 영상 재생
             render_multiple_folders(gloss)
 
         except Exception as e:
@@ -199,6 +265,7 @@ class MainWindow(QWidget):
         finally:
             self.is_recording_audio = False
             self.audio_button.setText("녹음")
+
 
 
 if __name__ == "__main__":

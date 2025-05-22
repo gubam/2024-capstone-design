@@ -12,6 +12,7 @@ def sign_to_audio(video_source):
 
 def audio_to_sign():
     sentence = stt_output()
+    print(sentence)
     gloss = generate_gloss_with_gpt(sentence)
     result = gloss.split(",")
     return result

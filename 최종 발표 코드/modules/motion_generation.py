@@ -97,9 +97,9 @@ def render_multiple_folders(folder_list):
     print("🎉 All folders completed.")
 
 # 사용 예:
-folders = [
-    "hello",
-    "hello"
-]
+# folders = [
+#     "hello",
+#     "hello"
+# ]
 
-render_multiple_folders(folders)
+# render_multiple_folders(folders)

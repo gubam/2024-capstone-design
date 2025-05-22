@@ -1,10 +1,10 @@
 from openai import OpenAI
 
 # ✅ OpenAI API 키 설정
-client = OpenAI(api_key="A")
+client = OpenAI(api_key="")
 
 #gloss map 그리기
-gloss_map = ["안녕하세요", "감사합니다","나","아프다","머리","손","이다"]
+gloss_map = ["안녕하세요","감사합니다","나","아프다","머리","손","이다"]
 
 # GPT에게 문장 생성 요청
 # person은 의사, 환자 두가지 상황을 제시함
