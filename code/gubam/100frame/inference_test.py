@@ -11,7 +11,7 @@ label_map = {
 }
 
 
-VIDEO_SRC = "C:/Users/gubam/Desktop/test1/sen/머리 아프다.mp4"
+VIDEO_SRC = "C:/Users/82109/Desktop/test1/0.mp4"
 
 #인스턴스 선언 부분
 keypoint = mp_keypoint.keypoint(kf_sw = True, draw_graph_sw = False, z_kill = True)

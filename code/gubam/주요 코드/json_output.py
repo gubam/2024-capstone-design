@@ -30,7 +30,7 @@ for i in range(len(file_list)):
         VIDEO_SRC = f"{word_folder}/{word_list[j]}"
         keypoint = mp_keypoint.keypoint(kf_sw = True, draw_graph_sw = False, z_kill = True, mp_holistic = mp_holistic, holistic= holistic)
         cap = cv2.VideoCapture(VIDEO_SRC)
-        sampling = training.ScoreSampling(50)
+        sampling = training.ScoreSampling(100)
         counter = 0
 
 

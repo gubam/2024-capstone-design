@@ -2,7 +2,6 @@
 필요한 패키지 설치
 pip install openai-whisper 
 pip install pyaudio (실시간 음성 인식) 
-pip install numpy (오디오 처리)
 '''
 
 import whisper

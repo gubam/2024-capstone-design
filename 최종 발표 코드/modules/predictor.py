@@ -4,18 +4,17 @@
 #################
 import torch
 import torch.nn.functional as F
-from .model import LSTMModel
+from .model import LSTMModel, TransformerClassifier
 
 label_map = {
-    0: "치료하다", 1: "머리", 2: "왼쪽", 3: "나",
-    4: "간호사", 5: "오른쪽", 6: "아프다", 7: "너",
-    8: "손ㅋ", 9: "건강하다"
+      0: "손", 1: "머리",  
+    2: "오른쪽", 3: "아프다"
 }
 
 class SignLanguagePredictor:
-    def __init__(self, model_path, input_size=102, hidden_size=128, num_layers=2, num_classes=10, device=None):
+    def __init__(self, model_path, input_size=102, hidden_size=128, num_layers=2, num_classes=8, device=None):
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model = LSTMModel(input_size, hidden_size, num_layers, num_classes).to(self.device)
+        self.model = LSTMModel(input_size=102, hidden_size=128, num_layers=2, num_classes=10).to(self.device)
         self.model.load_state_dict(torch.load(model_path, map_location=self.device))
         self.model.eval()
         print("✅ 모델 로드 완료")

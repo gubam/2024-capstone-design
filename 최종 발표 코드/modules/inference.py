@@ -6,7 +6,7 @@ from .predictor import SignLanguagePredictor
 from .kp_extractor import keypoint # your own module
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "..", "file", "10_words.pt")
+MODEL_PATH = os.path.join(BASE_DIR, "..", "file", "4_words.pt")
 
 def run_sign_inference(video_path):
     output = []
@@ -28,7 +28,7 @@ def run_sign_inference(video_path):
 
     predictor = SignLanguagePredictor(MODEL_PATH)
     results = predictor.predict_with_stride(
-        angle_tensor, window_size=100, stride=10, min_confidence=0.8
+        angle_tensor, window_size=100, stride=10, min_confidence=0.80
     )
 
     for start, end, label, conf in results:
