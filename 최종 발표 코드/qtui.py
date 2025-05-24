@@ -29,14 +29,21 @@ class StreamRedirect:
 def play_mp3():
     pygame.mixer.init()
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    MODEL_PATH = os.path.join(BASE_DIR,"file", "tts_output.mp3")
-    pygame.mixer.music.load(MODEL_PATH)
-    pygame.mixer.music.play()
-    print("🔊 MP3 재생 중...")
+    MODEL_PATH = os.path.join(BASE_DIR, "file", "tts_output.mp3")
 
-    # 재생이 끝날 때까지 기다림
-    while pygame.mixer.music.get_busy():
-        pygame.time.Clock().tick(10)
+    if pygame.mixer.music.get_busy():
+        pygame.mixer.music.stop()
+
+    try:
+        pygame.mixer.music.load(MODEL_PATH)
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)
+        pygame.mixer.music.stop()
+        pygame.mixer.quit()  # 🔴 여기서 리소스를 완전히 해제
+    except Exception as e:
+        print(f"MP3 재생 오류: {e}")
+
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -79,7 +86,6 @@ class MainWindow(QWidget):
 
         v_layout = QVBoxLayout()
         v_layout.addLayout(h_layout)
-        v_layout.addLayout(h_layout)
         v_layout.addLayout(bottom_layout)  
         self.setLayout(v_layout)
 
@@ -100,7 +106,7 @@ class MainWindow(QWidget):
             cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
             cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
             cap.set(cv2.CAP_PROP_FPS, 60)
-            self.message_box.clear()
+            # self.message_box.clear()
             if not cap.isOpened():
                 self.message_box.append("웹캠을 열 수 없습니다.")
                 return
@@ -217,7 +223,7 @@ class MainWindow(QWidget):
 
     def record_audio(self):
         try:
-            self.message_box.clear()
+            # self.message_box.clear()
 
             sample_rate = 44100
             channels = 1

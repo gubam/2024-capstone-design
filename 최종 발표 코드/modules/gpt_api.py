@@ -11,12 +11,17 @@ gloss_map = ["안녕하세요","감사합니다","나","아프다","머리","손
 def generate_sentence_with_gpt(words, person):
     words = remove_duplicates(words)
     prompt = (
-        f"다음 단어들은 수어의 gloss입니다. "
-        f"이 단어들만 사용해서 자연스럽고 문법에 맞는 한국어 문장으로 바꿔줘. "
-        f"필요하다면 조사나 어미는 붙여도 되지만, 새로운 단어나 동사는 절대 추가하지 마. "
-        f"문장은 병원현장에서 {person}가 쓸만한 구어체로 문장으로 작성을 해줘. "
-        f"단어들: {', '.join(words)}"
+        f"다음은 수어의 gloss 단어들입니다. "
+        f"이 단어들을 사용하여 병원 현장에서 {person}가 사용할 수 있는 구어체 한국어 문장으로 바꿔주세요.\n\n"
+        f"🔹 규칙:\n"
+        f"- 주어진 단어만 사용 (단어 순서는 재배치 가능)\n"
+        f"- 조사나 어미는 자연스럽게 붙여도 됨\n"
+        f"- 새로운 단어나 동사는 절대 추가하지 말 것\n"
+        f"- 자연스러운 구어체 문장으로 작성\n\n"
+        f"📝 단어 목록: {', '.join(words)}"
     )
+
+    print(prompt)
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
