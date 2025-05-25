@@ -221,6 +221,7 @@ class MainWindow(QWidget):
             self.audio_button.setText("녹음")
             print("🛑 녹음 중지 요청됨")
 
+    
     def record_audio(self):
         try:
             # self.message_box.clear()
@@ -261,6 +262,7 @@ class MainWindow(QWidget):
             self.message_box.append("🎧 오디오 저장 완료")
             gloss = audio_to_sign()
             print(gloss)
+            self.message_box.append(f"추출 단어 : {gloss}")
 
             # 🎬 영상 재생
             render_multiple_folders(gloss)

@@ -11,21 +11,21 @@ import torch
 import torch.nn as nn
 
 label_map = {
-      0: "손", 1: "머리",  
-    2: "오른쪽", 3: "아프다"
+    0: "검사하다", 1: "손", 2: "머리", 3: "안녕하세요",
+    4: "오른쪽", 5: "아프다", 6: "감사합니다", 7: "상처"
 }
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ##########모델 .pt path설정 파트
 ##########최종발표코드 -> file 경로에 pt파일 넣고 이름만 바꾸기 -> 지금은 4_words.pt로 이걸 파일명으로 바꿔
-MODEL_PATH = os.path.join(BASE_DIR, "..", "file", "4_words.pt")
+MODEL_PATH = os.path.join(BASE_DIR, "..", "file", "1dcnn.pt")
 
 class SignLanguagePredictor:
     def __init__(self, device=None):
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         ##학습 모델정의부분 
-        self.model = LSTMModel(input_size=102, hidden_size=128, num_layers=2, num_classes=10).to(self.device)
+        self.model = CNNBackbone().to(self.device)
         ##여기만 가져온모델로 바꾸세요
 
         self.model.load_state_dict(torch.load(MODEL_PATH, map_location=self.device))
@@ -81,25 +81,23 @@ class LSTMModel(nn.Module):
             out = hn[-1]
         return self.fc(out)
     
-class TransformerClassifier(nn.Module):
-    def __init__(self, input_size=102, model_dim=128, num_heads=4, num_layers=2, num_classes=10, dropout=0.1):
-        super(TransformerClassifier, self).__init__()
-
-        self.input_proj = nn.Linear(input_size, model_dim)
-
-        encoder_layer = nn.TransformerEncoderLayer(
-            d_model=model_dim,
-            nhead=num_heads,
-            dropout=dropout,
-            batch_first=True
+    
+class CNNBackbone(nn.Module):
+    def __init__(self, input_size=102, num_classes=8):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Conv1d(input_size, 128, kernel_size=5, padding=2),
+            nn.BatchNorm1d(128),
+            nn.ReLU(),
+            nn.Conv1d(128, 256, kernel_size=5, padding=2),
+            nn.BatchNorm1d(256),
+            nn.ReLU(),
+            nn.AdaptiveAvgPool1d(1),
         )
-        self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
+        self.fc = nn.Linear(256, num_classes)
 
-        self.classifier = nn.Linear(model_dim, num_classes)
-
-    def forward(self, x):
-        # x: (batch, seq_len, input_size)
-        x = self.input_proj(x)  # (batch, seq_len, model_dim)
-        x = self.transformer_encoder(x)  # (batch, seq_len, model_dim)
-        x = x.mean(dim=1)  # 평균 pooling (or x[:, 0, :] if using [CLS] token idea)
-        return self.classifier(x)  # (batch, num_classes)
+    def forward(self, x):  # x: (B, T, D)
+        x = x.transpose(1, 2)  # → (B, D, T)
+        x = self.net(x)
+        x = x.squeeze(-1)
+        return self.fc(x)

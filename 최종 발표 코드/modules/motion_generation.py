@@ -22,18 +22,19 @@ def draw_stick_figure(canvas, kps, pairs, color, radius=5, thickness=3):
             if ca > 0.2 and cb > 0.2:
                 cv2.line(canvas, (xa, ya), (xb, yb), color, thickness)
 
+
+#오픈포즈 기반 렌더링 함수 json경로 넣어주면 해당 json순서대로 그리기
 def render_openpose_folder(folder_path, canvas_size=1500, display_size=800):
     json_files = sorted(glob(os.path.join(folder_path, '*_keypoints.json')))
     if not json_files:
-        print(f"❌ No JSON files in {folder_path}")
+        print(f"JSON 파일 없음 : {folder_path}")
         return False  # skip
 
-    print(f"▶️ Playing folder: {os.path.basename(folder_path)} ({len(json_files)} frames)")
+    print(f" Playing folder: {os.path.basename(folder_path)} ({len(json_files)} frames)")
 
     POSE_PAIRS = [
         (1, 2), (2, 3), (3, 4),         # 오른팔: Neck → RShoulder → RElbow → RWrist
         (1, 5), (5, 6), (6, 7),         # 왼팔: Neck → LShoulder → LElbow → LWrist
-
     ]
 
 
@@ -80,6 +81,7 @@ def render_openpose_folder(folder_path, canvas_size=1500, display_size=800):
 
     return False  # 정상 완료
 
+#최종 영상 재생 함수 folder list는 gloss들이 리스트 형태로 들어감
 def render_multiple_folders(folder_list):
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -94,12 +96,5 @@ def render_multiple_folders(folder_list):
         print(f"✅ Finished: {folder}\n")
 
     cv2.destroyAllWindows()
-    print("🎉 All folders completed.")
+    print("All folders completed.")
 
-# 사용 예:
-# folders = [
-#     "hello",
-#     "hello"
-# ]
-
-# render_multiple_folders(folders)

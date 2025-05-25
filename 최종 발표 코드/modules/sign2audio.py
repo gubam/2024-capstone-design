@@ -17,8 +17,10 @@ def audio_to_sign():
     result = gloss.split(",")
     return result
 
+
 # print(audio_to_sign())
 # result = generate_gloss_with_gpt("안녕하세요 머리가 아프네요")
 # result = result.split(",")
 # print(result)
 # result = sign_to_audio("C:/Users/82109/Desktop/테스트셋-20250522T040652Z-1-001/테스트셋/감사합니다/20250521_181636.mp4")
+#sign_to_audio()
