@@ -56,8 +56,8 @@ class MainWindow(QWidget):
         font.setPointSize(16)
         fonts = QFont()
         fonts.setPointSize(10)     
-        self.record_button = QPushButton("웹캠 녹화 시작")
-        self.audio_button = QPushButton("녹음")  # UI용
+        self.record_button = QPushButton("웹캠 녹화 시작\n(수어 -> 음성)")
+        self.audio_button = QPushButton("녹음\n(음성 -> 수어)")  # UI용
         self.record_button.setFont(font)
         self.audio_button.setFont(font)
 
